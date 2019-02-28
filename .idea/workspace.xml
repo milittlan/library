@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5846943f-49e2-4d0b-a29a-8110f6624b02" name="Default Changelist" comment="" />
+    <list default="true" id="5846943f-49e2-4d0b-a29a-8110f6624b02" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +39,7 @@
     <session id="693935954">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="14" />
+          <entry key="project.closed" value="15" />
           <entry key="project.open.time.0" value="9" />
           <entry key="project.open.time.1" value="3" />
           <entry key="project.open.time.3" value="1" />
@@ -334,12 +336,12 @@
       <workItem from="1550816896155" duration="10134000" />
       <workItem from="1550837943932" duration="1265000" />
       <workItem from="1550922331641" duration="4038000" />
-      <workItem from="1551335356539" duration="8214000" />
+      <workItem from="1551335356539" duration="8703000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69378000" />
+    <option name="totallyTimeSpent" value="69867000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -367,8 +369,8 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" auto_hide="true" id="Terminal" order="10" sideWeight="0.49841937" visible="true" weight="0.32852387" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5015806" side_tool="true" visible="true" weight="0.32852387" />
+      <window_info active="true" anchor="bottom" auto_hide="true" id="Terminal" order="10" sideWeight="0.49736565" visible="true" weight="0.32852387" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50263435" side_tool="true" visible="true" weight="0.32852387" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
