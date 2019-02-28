@@ -1,0 +1,16 @@
+[14-Feb-2019 08:02:48 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\mvc\public\index.php(38): Core\Router->dispatch('/posts')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\mvc\Core\Router.php' on line 129
+[14-Feb-2019 08:02:49 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\mvc\public\index.php(38): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\mvc\Core\Router.php' on line 129
+[14-Feb-2019 08:10:52 Europe/Berlin] Uncaught exception: 'Exception' with message 'Controller class App\Controllers\Admin not found'
+Stack trace: #0 C:\xampp\htdocs\mvc\public\index.php(38): Core\Router->dispatch('admin/iser')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\mvc\Core\Router.php' on line 126
+[14-Feb-2019 08:10:56 Europe/Berlin] Uncaught exception: 'Exception' with message 'Controller class App\Controllers\Admin not found'
+Stack trace: #0 C:\xampp\htdocs\mvc\public\index.php(38): Core\Router->dispatch('admin/user')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\mvc\Core\Router.php' on line 126

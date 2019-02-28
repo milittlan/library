@@ -1,0 +1,30 @@
+[05-Feb-2019 10:14:26 Europe/Podgorica] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 /home/milanbildhosting/public_html/mvc/public/index.php(38): Core\Router->dispatch('products/')
+#1 {main}
+Thrown in '/home/milanbildhosting/public_html/mvc/Core/Router.php' on line 133
+[05-Feb-2019 10:19:15 Europe/Podgorica] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 /home/milanbildhosting/public_html/mvc/public/index.php(38): Core\Router->dispatch('products/')
+#1 {main}
+Thrown in '/home/milanbildhosting/public_html/mvc/Core/Router.php' on line 130
+[05-Feb-2019 10:19:16 Europe/Podgorica] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 /home/milanbildhosting/public_html/mvc/public/index.php(38): Core\Router->dispatch('products/')
+#1 {main}
+Thrown in '/home/milanbildhosting/public_html/mvc/Core/Router.php' on line 130
+[05-Feb-2019 10:21:07 Europe/Podgorica] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 /home/milanbildhosting/public_html/mvc/public/index.php(38): Core\Router->dispatch('products/')
+#1 {main}
+Thrown in '/home/milanbildhosting/public_html/mvc/Core/Router.php' on line 130
+[05-Feb-2019 10:22:01 Europe/Podgorica] Uncaught exception: 'Twig_Error_Loader' with message 'Unable to find template "Home/inde.html" (looked into: ../App/Views).'
+Stack trace: #0 /home/milanbildhosting/public_html/mvc/vendor/twig/twig/lib/Twig/Loader/Filesystem.php(139): Twig_Loader_Filesystem->findTemplate('Home/inde.html')
+#1 /home/milanbildhosting/public_html/mvc/vendor/twig/twig/lib/Twig/Environment.php(312): Twig_Loader_Filesystem->getCacheKey('Home/inde.html')
+#2 /home/milanbildhosting/public_html/mvc/vendor/twig/twig/lib/Twig/Environment.php(378): Twig_Environment->getTemplateClass('Home/inde.html', NULL)
+#3 /home/milanbildhosting/public_html/mvc/vendor/twig/twig/lib/Twig/Environment.php(347): Twig_Environment->loadTemplate('Home/inde.html')
+#4 /home/milanbildhosting/public_html/mvc/Core/View.php(51): Twig_Environment->render('Home/inde.html', Array)
+#5 /home/milanbildhosting/public_html/mvc/App/Controllers/Home.php(52): Core\View::renderTemplate('Home/inde.html', Array)
+#6 [internal function]: App\Controllers\Home->indexAction()
+#7 /home/milanbildhosting/public_html/mvc/Core/Controller.php(48): call_user_func_array(Array, Array)
+#8 /home/milanbildhosting/public_html/mvc/Core/Router.php(121): Core\Controller->__call('index', Array)
+#9 /home/milanbildhosting/public_html/mvc/Core/Router.php(121): App\Controllers\Home->index()
+#10 /home/milanbildhosting/public_html/mvc/public/index.php(38): Core\Router->dispatch('')
+#11 {main}
+Thrown in '/home/milanbildhosting/public_html/mvc/vendor/twig/twig/lib/Twig/Loader/Filesystem.php' on line 215
