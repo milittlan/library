@@ -31,6 +31,7 @@ class HomeController extends \Core\Controller
     protected function after()
     {
         //echo " (after)";
+        //return false;
     }
 
     /**
@@ -40,12 +41,7 @@ class HomeController extends \Core\Controller
      */
     public function indexAction()
     {
-        /*
-        View::render('Home/index.php', [
-            'name'    => 'Dave',
-            'colours' => ['red', 'green', 'blue']
-        ]);
-        */
+
         View::renderTemplate('Home/index.html', [
             'name'    => 'Milan',
             'datas' => ['Milan', 'Markovic', 'Bild Studio']

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use App\Models\PostService;
+use http\Env\Request;
 
 /**
  * Posts controller
@@ -34,6 +35,8 @@ class PostsController extends \Core\Controller
      */
     public function addNewAction()
     {
+
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $post = PostService::create($_POST);
@@ -46,16 +49,51 @@ class PostsController extends \Core\Controller
     }
 
     /**
+     *
      * Show the edit page
      *
      */
     public function editAction()
     {
-        View::renderTemplate('Posts/editPost.html');
+
+        $id = $this->getRouteParams("id");
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $post = PostService::update($_POST);
+
+            View::renderTemplate('Posts/editPost.html', [
+                'post' => $post
+            ]);
+            return;
+        } else {
+            $post = PostService::getPostById($id);
+            View::renderTemplate('Posts/editPost.html', [
+                'post' => $post
+            ]);
+        }
+
     }
 
+    /**
+     *
+     * Delete Action
+     *
+     */
     public function deleteAction()
     {
+        $id = $this->getRouteParams("id");
+
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $posts = PostService::delete($_POST);
+
+            View::renderTemplate('Posts/index.html', [
+                'posts' => $posts
+            ]);
+            return;
+        }
 
     }
 }

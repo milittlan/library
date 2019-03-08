@@ -17,6 +17,22 @@ abstract class Controller
     protected $route_params = [];
 
     /**
+     * Return all route params if type is not sent. If type is sent it returns specified param
+     *
+     * @param null $type - Type can be controler or action or id
+     * @return array
+     */
+    public function getRouteParams($type = null)
+    {
+        if(isset($this->route_params[$type])) {
+            return $this->route_params[$type];
+        }
+
+        return $this->route_params;
+
+    }
+
+    /**
      * Class constructor
      *
      * @param array $route_params  Parameters from the route
@@ -71,5 +87,6 @@ abstract class Controller
      */
     protected function after()
     {
+        echo "After action";
     }
 }

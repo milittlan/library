@@ -35,6 +35,7 @@
                             <th>#</th>
                             <th>Title</th>
                             <th>Content</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
@@ -46,6 +47,7 @@
                         <td>{{ post.id }}</td>
                         <td>{{ post.title }}</td>
                         <td>{{ post.content }}</td>
+                        <td><a href="/posts/edit/{{ post.id }}">Edit</a> </td>
                     </tr>
                     {% endfor %}
 
