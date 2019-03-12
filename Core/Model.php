@@ -21,7 +21,7 @@ abstract class Model {
 
         if ($db === null) {
             /**
-             * Zakomentarisano jer smo podatke za konekciju na bazu prebacili u Config.php
+             * We disable this code because we defined db connection in  Config.php
              *
              */
 

@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use \Core\View;
 use App\Models\PostService;
-use http\Env\Request;
 
 /**
  * Posts controller
@@ -21,7 +20,7 @@ class PostsController extends \Core\Controller
      */
     public function indexAction()
     {
-        $posts = PostService::getAll();
+        $posts = PostService::readAll();
 
         View::renderTemplate('Posts/index.html', [
             'posts' => $posts
@@ -67,7 +66,7 @@ class PostsController extends \Core\Controller
             ]);
             return;
         } else {
-            $post = PostService::getPostById($id);
+            $post = PostService::readOne($id);
             View::renderTemplate('Posts/editPost.html', [
                 'post' => $post
             ]);

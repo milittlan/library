@@ -2,7 +2,8 @@
 
 namespace App\Models\Entity;
 
-class Post extends \App\Models\PostService {
+
+class Post extends \App\Models\PostService{
 
     private $id;
     private $title;
@@ -61,9 +62,5 @@ class Post extends \App\Models\PostService {
         $this->content = $content;
         return $this;
     }
-
-
-
-
 
 }

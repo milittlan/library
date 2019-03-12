@@ -15,7 +15,7 @@ class PostService extends \Core\Model {
      *
      * @return array
      */
-    public static function getAll()
+    public static function readAll()
     {
 
         try {
@@ -38,15 +38,16 @@ class PostService extends \Core\Model {
      * Get post by ID
      *
      */
-    public static function getPostById($id){
+    public static function readOne($id){
         try {
+
             $db = static::getDB();
             $stmt = $db->prepare("SELECT * FROM posts WHERE id = :id LIMIT 1");
-
 
             $stmt->execute(["id"=>$id]);
             $results = $stmt->fetch(PDO::FETCH_ASSOC);
             return $results;
+
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -84,8 +85,6 @@ class PostService extends \Core\Model {
     {
         try {
 
-
-            // Create new entity from existing data
             $post = new Post();
 
             $post->setId($data['id']);
@@ -93,13 +92,16 @@ class PostService extends \Core\Model {
             $post->setTitle($data["title"]);
 
 
-
             $db = static::getDB();
             $stmt = $db->prepare("UPDATE posts SET title = :title, content = :content, created_at = NOW() WHERE id = :id");
 
-            $stmt->bindParam(':id', $post->getId(), PDO::PARAM_STR);
-            $stmt->bindParam(':title', $post->getTitle(), PDO::PARAM_STR);
-            $stmt->bindParam(':content', $post->getContent(), PDO::PARAM_STR);
+            $id = $post->getId();
+            $title = $post->getTitle();
+            $content = $post->getContent();
+
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+            $stmt->bindParam(':content', $content, PDO::PARAM_STR);
 
             $results = $stmt->execute();
 
