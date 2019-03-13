@@ -35,25 +35,14 @@ class PostsController extends \Core\Controller
     public function addNewAction()
     {
 
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $data = [
-                'title' => trim($_POST['title']),
-                'content' => trim($_POST['content']),
-                'error' => ''
-            ];
+            $title   = $_POST['title'];
+            $content = $_POST['content'];
+            $error = '';
 
-            if (empty($data['title'])) {
-                $data['error'] = 'Error with title';
-            }
-            // I put content 'aaa' like unauthorized content and testing
-            if ($data['content'] = 'aaa') {
-                $data['error'] = 'Error with content';
-            }
-
-            if(empty($data['error'])) {
-                $post = PostService::create($data);
+            if(empty($error)) {
+                $post = PostService::create($title,$content);
                 View::renderTemplate('Posts/addPost.html', [
                     'post' => $post
                 ]);
@@ -75,7 +64,11 @@ class PostsController extends \Core\Controller
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $post = PostService::update($_POST);
+            $id   = $_POST['id'];
+            $title   = $_POST['title'];
+            $content = $_POST['content'];
+
+            $post = PostService::update($id, $title,$content);
 
             View::renderTemplate('Posts/editPost.html', [
                 'post' => $post
@@ -97,12 +90,12 @@ class PostsController extends \Core\Controller
      */
     public function deleteAction()
     {
-        $id = $this->getRouteParams("id");
+        $id   = $_POST['id'];
 
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $posts = PostService::delete($_POST);
+            $posts = PostService::delete($id);
 
             View::renderTemplate('Posts/index.html', [
                 'posts' => $posts

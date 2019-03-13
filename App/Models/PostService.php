@@ -58,7 +58,7 @@ class PostService extends \Core\Model {
      * ADD NEW POST
      *
      */
-    public static function create($data)
+    public static function create($title, $content)
     {
 
 
@@ -67,8 +67,8 @@ class PostService extends \Core\Model {
 
             $stmt = $db->prepare("INSERT INTO posts (title, content, created_at) VALUES (:title, :content, NOW())");
 
-            $stmt->bindParam(':title', $data['title'], PDO::PARAM_STR);
-            $stmt->bindParam(':content', $data['content'], PDO::PARAM_STR);
+            $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+            $stmt->bindParam(':content', $content, PDO::PARAM_STR);
 
             $results = $stmt->execute();
 
@@ -83,15 +83,15 @@ class PostService extends \Core\Model {
     * Update post
     *
     */
-    public static function update($data)
+    public static function update($id, $title, $content)
     {
         try {
 
             $post = new Post();
 
-            $post->setId($data['id']);
-            $post->setContent($data["content"]);
-            $post->setTitle($data["title"]);
+            $post->setId($id);
+            $post->setContent($title);
+            $post->setTitle($content);
 
 
             $db = static::getDB();
@@ -119,7 +119,7 @@ class PostService extends \Core\Model {
      * Delete post
      *
      */
-    public static function delete($data)
+    public static function delete($id)
     {
         try {
 
@@ -127,7 +127,7 @@ class PostService extends \Core\Model {
 
             $stmt = $db->prepare("DELETE FROM posts WHERE id = :id");
 
-            $stmt->bindParam(':id', $data['id']);
+            $stmt->bindParam(':id', $id);
 
             $results = $stmt->execute();
 
