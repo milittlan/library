@@ -60,6 +60,8 @@ class PostService extends \Core\Model {
      */
     public static function create($data)
     {
+
+
         try {
             $db = static::getDB();
 

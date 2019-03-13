@@ -4,12 +4,6 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/Core" isTestSource="false" packagePrefix="Core\" />
       <sourceFolder url="file://$MODULE_DIR$/App" isTestSource="false" packagePrefix="App\" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/Twig/doc" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/Twig/ext" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/Twig/lib" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/Twig/test" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/Twig/twig" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

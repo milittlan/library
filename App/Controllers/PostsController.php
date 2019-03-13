@@ -38,11 +38,27 @@ class PostsController extends \Core\Controller
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $post = PostService::create($_POST);
-            View::renderTemplate('Posts/addPost.html', [
-                'post' => $post
-            ]);
-            return;
+            $data = [
+                'title' => trim($_POST['title']),
+                'content' => trim($_POST['content']),
+                'error' => ''
+            ];
+
+            if (empty($data['title'])) {
+                $data['error'] = 'Error with title';
+            }
+            // I put content 'aaa' like unauthorized content and testing
+            if ($data['content'] = 'aaa') {
+                $data['error'] = 'Error with content';
+            }
+
+            if(empty($data['error'])) {
+                $post = PostService::create($data);
+                View::renderTemplate('Posts/addPost.html', [
+                    'post' => $post
+                ]);
+                return;
+            }
         }
         View::renderTemplate('Posts/addPost.html');
     }
