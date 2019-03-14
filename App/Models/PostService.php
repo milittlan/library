@@ -62,7 +62,6 @@ class PostService extends \Core\Model {
     {
 
 
-        try {
             $db = static::getDB();
 
             $stmt = $db->prepare("INSERT INTO posts (title, content, created_at) VALUES (:title, :content, NOW())");
@@ -73,9 +72,7 @@ class PostService extends \Core\Model {
             $results = $stmt->execute();
 
             return $results;
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
+
     }
 
     /*

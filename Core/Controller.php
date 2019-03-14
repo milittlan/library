@@ -89,4 +89,33 @@ abstract class Controller
     {
         echo "After action";
     }
+
+    /*
+     *
+     * Error variable
+     * @var array
+     *
+     */
+
+    public $errors = [];
+
+    /*
+     *
+     * Get errors
+     *
+     */
+    public function getErrors($errors)
+    {
+
+    }
+
+    /*
+     *
+     * Adding erros
+     *
+     */
+    public function addError()
+    {
+
+    }
 }

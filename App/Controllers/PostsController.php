@@ -42,11 +42,21 @@ class PostsController extends \Core\Controller
             $error = '';
 
             if(empty($error)) {
-                $post = PostService::create($title,$content);
-                View::renderTemplate('Posts/addPost.html', [
-                    'post' => $post
-                ]);
-                return;
+
+                try {
+
+                    $post = PostService::create($title,$content);
+                    View::renderTemplate('Posts/addPost.html', [
+                        'post' => $post
+                    ]);
+                    return;
+
+                } catch (\PDOException $e) {
+
+                    echo $e->getMessage();
+                    $this->addErrors();
+
+                }
             }
         }
         View::renderTemplate('Posts/addPost.html');
