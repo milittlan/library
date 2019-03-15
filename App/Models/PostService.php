@@ -118,7 +118,7 @@ class PostService extends \Core\Model {
 
             $db = static::getDB();
 
-            $stmt = $db->prepare("DELETE FROM posts WHERE id = :id");
+            $stmt = $db->prepare("DELETE FROM postss WHERE id = :id");
 
             $stmt->bindParam(':id', $id);
 

@@ -68,7 +68,7 @@ class PostsController extends \Core\Controller
                     return;
 
                 }  catch (\PDOException $e) {
-                    echo $e->getMessage();
+                    $errors[] = $e->getMessage();
                 }
 
             }
