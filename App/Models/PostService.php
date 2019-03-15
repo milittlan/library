@@ -61,7 +61,6 @@ class PostService extends \Core\Model {
     public static function create($title, $content)
     {
 
-
             $db = static::getDB();
 
             $stmt = $db->prepare("INSERT INTO posts (title, content, created_at) VALUES (:title, :content, NOW())");
@@ -82,7 +81,6 @@ class PostService extends \Core\Model {
     */
     public static function update($id, $title, $content)
     {
-        try {
 
             $post = new Post();
 
@@ -105,9 +103,7 @@ class PostService extends \Core\Model {
             $results = $stmt->execute();
 
             return $results;
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
+
 
     }
 
@@ -118,7 +114,7 @@ class PostService extends \Core\Model {
      */
     public static function delete($id)
     {
-        try {
+
 
             $db = static::getDB();
 
@@ -130,11 +126,7 @@ class PostService extends \Core\Model {
 
             return $results;
 
-        } catch (PDOException $e) {
 
-            echo $e->getMessage();
-
-        }
     }
 
 }

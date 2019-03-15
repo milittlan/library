@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use \Core\View;
+use PDO;
 use App\Models\PostService;
 
 /**
@@ -41,7 +42,21 @@ class PostsController extends \Core\Controller
             $content = $_POST['content'];
             $error = '';
 
-            if(empty($error)) {
+            /*
+             * validate fields
+             *
+             */
+            if ($title == 'aaa') {
+                $error = 'Greska - polje Title ne moze da ima ovaj sadrzaj';
+                $errors[] = $error;
+            }
+
+            if ($content== 'aaa') {
+                $error = 'Greska - polje Content ne moze da ima ovaj sadrzaj';
+                $errors[] = $error;
+            }
+
+            if (empty($errors)) {
 
                 try {
 
@@ -49,15 +64,21 @@ class PostsController extends \Core\Controller
                     View::renderTemplate('Posts/addPost.html', [
                         'post' => $post
                     ]);
+
                     return;
 
-                } catch (\PDOException $e) {
-
+                }  catch (\PDOException $e) {
                     echo $e->getMessage();
-                    $this->addErrors();
-
                 }
+
             }
+
+            View::renderTemplate('Posts/addPost.html', [
+                'title' => $title,
+                'content' => $content,
+                'errors' => $errors
+            ]);
+            exit();
         }
         View::renderTemplate('Posts/addPost.html');
     }
@@ -78,12 +99,20 @@ class PostsController extends \Core\Controller
             $title   = $_POST['title'];
             $content = $_POST['content'];
 
-            $post = PostService::update($id, $title,$content);
 
-            View::renderTemplate('Posts/editPost.html', [
-                'post' => $post
-            ]);
-            return;
+            try {
+
+                $post = PostService::update($id, $title, $content);
+
+                View::renderTemplate('Posts/editPost.html', [
+                    'post' => $post
+                ]);
+                return;
+
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
+
         } else {
             $post = PostService::readOne($id);
             View::renderTemplate('Posts/editPost.html', [
@@ -105,12 +134,20 @@ class PostsController extends \Core\Controller
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            try {
+
             $posts = PostService::delete($id);
 
             View::renderTemplate('Posts/index.html', [
                 'posts' => $posts
             ]);
             return;
+
+            } catch (PDOException $e) {
+
+                echo $e->getMessage();
+
+            }
         }
 
     }
