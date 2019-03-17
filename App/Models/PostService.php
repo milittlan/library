@@ -46,6 +46,7 @@ class PostService extends \Core\Model {
 
             $stmt->execute(["id"=>$id]);
             $results = $stmt->fetch(PDO::FETCH_ASSOC);
+
             return $results;
 
         } catch (PDOException $e) {
@@ -58,7 +59,7 @@ class PostService extends \Core\Model {
      * ADD NEW POST
      *
      */
-    public static function create($title, $content)
+    public static function create($title, $content, $error)
     {
 
             $db = static::getDB();
@@ -85,8 +86,8 @@ class PostService extends \Core\Model {
             $post = new Post();
 
             $post->setId($id);
-            $post->setContent($title);
-            $post->setTitle($content);
+            $post->setContent($content);
+            $post->setTitle($title);
 
 
             $db = static::getDB();
@@ -103,8 +104,6 @@ class PostService extends \Core\Model {
             $results = $stmt->execute();
 
             return $results;
-
-
     }
 
     /*
@@ -118,14 +117,13 @@ class PostService extends \Core\Model {
 
             $db = static::getDB();
 
-            $stmt = $db->prepare("DELETE FROM postss WHERE id = :id");
+            $stmt = $db->prepare("DELETE FROM posts WHERE id = :id");
 
             $stmt->bindParam(':id', $id);
 
             $results = $stmt->execute();
 
             return $results;
-
 
     }
 

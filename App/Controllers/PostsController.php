@@ -40,30 +40,32 @@ class PostsController extends \Core\Controller
 
             $title   = $_POST['title'];
             $content = $_POST['content'];
-            $error = '';
+            $errors = '';
 
             /*
              * validate fields
              *
              */
             if ($title == 'aaa') {
-                $error = 'Greska - polje Title ne moze da ima ovaj sadrzaj';
-                $errors[] = $error;
+                $error_message = 'Greska - polje Title ne moze da ima ovaj sadrzaj';
+                $this->addError($error_message);
             }
 
             if ($content== 'aaa') {
-                $error = 'Greska - polje Content ne moze da ima ovaj sadrzaj';
-                $errors[] = $error;
+                $error_message = 'Greska - polje Title ne moze da ima ovaj sadrzaj';
+                $this->addError($error_message);
             }
 
-            if (empty($errors)) {
+            if (empty($error_message)) {
 
                 try {
 
-                    $post = PostService::create($title,$content);
-                    View::renderTemplate('Posts/addPost.html', [
-                        'post' => $post
-                    ]);
+                    $post = PostService::create($title,$content, $error);
+
+                    /*
+                     * REdirect to index page
+                     */
+                    header('Location: index');
 
                     return;
 
@@ -73,13 +75,21 @@ class PostsController extends \Core\Controller
 
             }
 
+            $errors = getErrors($errors);
+
             View::renderTemplate('Posts/addPost.html', [
                 'title' => $title,
                 'content' => $content,
                 'errors' => $errors
             ]);
-            exit();
+            return;
         }
+
+        /*
+         *
+         * Render form when we call action add new post
+         *
+         */
         View::renderTemplate('Posts/addPost.html');
     }
 

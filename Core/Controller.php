@@ -104,9 +104,10 @@ abstract class Controller
      * Get errors
      *
      */
-    public function getErrors($errors)
+    public function getErrors($error_message)
     {
-
+        $errors[] = $error_message;
+        return $errors;
     }
 
     /*
@@ -114,8 +115,8 @@ abstract class Controller
      * Adding erros
      *
      */
-    public function addError()
+    public function addError($error_message)
     {
-
+        $this->getErrors($error_message);
     }
 }
