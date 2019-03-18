@@ -90,33 +90,26 @@ abstract class Controller
         echo "After action";
     }
 
-    /*
-     *
-     * Error variable
+    /**
      * @var array
-     *
      */
-
     public $errors = [];
 
-    /*
-     *
+    /**
      * Get errors
-     *
+     * @return array
      */
-    public function getErrors($error_message)
+    public function getErrors()
     {
-        $errors[] = $error_message;
-        return $errors;
+        return $this->errors;
     }
 
-    /*
-     *
-     * Adding erros
-     *
+    /**
+     * Adding errors
+     * @param $error_message
      */
     public function addError($error_message)
     {
-        $this->getErrors($error_message);
+        array_push($this->errors, $error_message);
     }
 }

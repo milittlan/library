@@ -31,9 +31,14 @@
 
                 <form id="form_validation" method="POST" action="addNew">
 
+
+                    {% if errors is not empty %}
+
                     <div class="col-white alert-danger" style="margin-bottom: 20px;">
                         {{ errors|join(',') }}
                     </div>
+
+                    {% endif %}
 
                     <div class="form-group form-float">
                         <div class="form-line">

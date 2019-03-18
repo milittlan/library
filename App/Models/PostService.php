@@ -47,7 +47,18 @@ class PostService extends \Core\Model {
             $stmt->execute(["id"=>$id]);
             $results = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            return $results;
+            $id = $results['id'];
+            $title = $results['title'];
+            $content = $results['content'];
+
+            $post = new Post();
+
+            $post->setId($id);
+            $post->setContent($content);
+            $post->setTitle($title);
+
+            return $post;
+
 
         } catch (PDOException $e) {
             echo $e->getMessage();

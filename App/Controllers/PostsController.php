@@ -42,8 +42,10 @@ class PostsController extends \Core\Controller
             $content = $_POST['content'];
             $errors = '';
 
-            /*
-             * validate fields
+            /**
+             *
+             * Validate title and content.
+             * For testing we are checking does fields have exact content.
              *
              */
             if ($title == 'aaa') {
@@ -52,18 +54,20 @@ class PostsController extends \Core\Controller
             }
 
             if ($content== 'aaa') {
-                $error_message = 'Greska - polje Title ne moze da ima ovaj sadrzaj';
+                $error_message = 'Greska - polje Content ne moze da ima ovaj sadrzaj';
                 $this->addError($error_message);
             }
 
-            if (empty($error_message)) {
+            $error = $this->getErrors();
+
+            if (empty($error)) {
 
                 try {
 
                     $post = PostService::create($title,$content, $error);
 
-                    /*
-                     * REdirect to index page
+                    /**
+                     * Redirect to index/All posts page
                      */
                     header('Location: index');
 
@@ -75,12 +79,15 @@ class PostsController extends \Core\Controller
 
             }
 
-            $errors = getErrors($errors);
-
+            /**
+             *
+             * Display forms with error message and content.
+             *
+             */
             View::renderTemplate('Posts/addPost.html', [
                 'title' => $title,
                 'content' => $content,
-                'errors' => $errors
+                'errors' => $error
             ]);
             return;
         }
@@ -114,9 +121,11 @@ class PostsController extends \Core\Controller
 
                 $post = PostService::update($id, $title, $content);
 
-                View::renderTemplate('Posts/editPost.html', [
-                    'post' => $post
-                ]);
+                /**
+                 * Redirect to index/All posts page
+                 */
+                header('Location: /posts/index');
+
                 return;
 
             } catch (PDOException $e) {
@@ -124,9 +133,17 @@ class PostsController extends \Core\Controller
             }
 
         } else {
+
             $post = PostService::readOne($id);
+
+            $id = $post->getId();
+            $title = $post->getTitle();
+            $content = $post->getContent();
+
             View::renderTemplate('Posts/editPost.html', [
-                'post' => $post
+                'id' => $id,
+                'title' => $title,
+                'content' => $content
             ]);
         }
 
