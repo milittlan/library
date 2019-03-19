@@ -18,8 +18,6 @@ class PostService extends \Core\Model {
     public static function readAll()
     {
 
-        try {
-
             $db = static::getDB();
 
             $stmt = $db->query('SELECT id, title, content FROM posts 
@@ -28,18 +26,14 @@ class PostService extends \Core\Model {
 
             return $results;
 
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
     }
 
-    /*
-     *
-     * Get post by ID
+    /**
+     * @param $id
+     * @return Post
      *
      */
     public static function readOne($id){
-        try {
 
             $db = static::getDB();
             $stmt = $db->prepare("SELECT * FROM posts WHERE id = :id LIMIT 1");
@@ -58,19 +52,14 @@ class PostService extends \Core\Model {
             $post->setTitle($title);
 
             return $post;
-
-
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
     }
 
-    /*
-     *
-     * ADD NEW POST
-     *
+    /**
+     * @param $title
+     * @param $content
+     * @return mixed
      */
-    public static function create($title, $content, $error)
+    public static function create($title, $content)
     {
 
             $db = static::getDB();
@@ -82,15 +71,20 @@ class PostService extends \Core\Model {
 
             $results = $stmt->execute();
 
-            return $results;
+            if ($results == true) {
+                return true;
+            } else {
+                return false;
+            }
 
     }
 
-    /*
-    *
-    * Update post
-    *
-    */
+    /**
+     * @param $id
+     * @param $title
+     * @param $content
+     * @return bool
+     */
     public static function update($id, $title, $content)
     {
 
@@ -114,27 +108,34 @@ class PostService extends \Core\Model {
 
             $results = $stmt->execute();
 
-            return $results;
+            if ($results == true) {
+                return true;
+            } else {
+                return false;
+            }
+
     }
 
-    /*
-     *
-     * Delete post
-     *
+    /**
+     * @param $id
+     * @return bool
      */
     public static function delete($id)
     {
 
-
             $db = static::getDB();
 
-            $stmt = $db->prepare("DELETE FROM posts WHERE id = :id");
+            $stmt = $db->prepare("DELETE FROM postss WHERE id = :id");
 
             $stmt->bindParam(':id', $id);
 
             $results = $stmt->execute();
 
-            return $results;
+            if ($results == true) {
+                return true;
+            } else {
+                return false;
+            }
 
     }
 

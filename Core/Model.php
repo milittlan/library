@@ -13,7 +13,7 @@ abstract class Model {
     /**
      * Get the PDO database connection
      *
-     * @return mixed
+     * @return PDO
      */
     protected static function getDB()
     {

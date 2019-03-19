@@ -23,6 +23,7 @@ class PostsController extends \Core\Controller
     {
         $posts = PostService::readAll();
 
+
         View::renderTemplate('Posts/index.html', [
             'posts' => $posts
         ]);
@@ -40,7 +41,6 @@ class PostsController extends \Core\Controller
 
             $title   = $_POST['title'];
             $content = $_POST['content'];
-            $errors = '';
 
             /**
              *
@@ -53,7 +53,7 @@ class PostsController extends \Core\Controller
                 $this->addError($error_message);
             }
 
-            if ($content== 'aaa') {
+            if ($content == 'aaa') {
                 $error_message = 'Greska - polje Content ne moze da ima ovaj sadrzaj';
                 $this->addError($error_message);
             }
@@ -64,17 +64,16 @@ class PostsController extends \Core\Controller
 
                 try {
 
-                    $post = PostService::create($title,$content, $error);
+                    $post = PostService::create($title,$content);
 
                     /**
                      * Redirect to index/All posts page
                      */
                     header('Location: index');
 
-                    return;
 
                 }  catch (\PDOException $e) {
-                    $errors[] = $e->getMessage();
+                    $this->addError($e->getMessage());
                 }
 
             }
@@ -92,17 +91,16 @@ class PostsController extends \Core\Controller
             return;
         }
 
-        /*
+        /**
          *
-         * Render form when we call action add new post
-         *
+         * Render empty form when for action add new post
          */
         View::renderTemplate('Posts/addPost.html');
     }
 
     /**
      *
-     * Show the edit page
+     * Edit action
      *
      */
     public function editAction()
@@ -110,29 +108,72 @@ class PostsController extends \Core\Controller
 
         $id = $this->getRouteParams("id");
 
+        /**
+         *
+         * Check is it POST.
+         */
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $id   = $_POST['id'];
             $title   = $_POST['title'];
             $content = $_POST['content'];
 
+            /**
+             * ITs post!
+             * validation of updated content
+             */
 
-            try {
+            if ($title == 'aaa') {
+                $error_message = 'Greska - polje Title ne moze da ima ovaj sadrzaj';
+                $this->addError($error_message);
+            }
 
-                $post = PostService::update($id, $title, $content);
+            if ($content == 'aaa') {
+                $error_message = 'Greska - polje Content ne moze da ima ovaj sadrzaj';
+                $this->addError($error_message);
+            }
 
+            $error = $this->getErrors();
+
+            /**
+             * Check errors
+             */
+            if (empty($error)) {
+
+                try {
+
+                    $post = PostService::update($id, $title, $content);
+
+                    /**
+                     * Redirect to index/All posts page
+                     */
+                    header('Location: /posts/index');
+
+
+                } catch (PDOException $e) {
+                    $this->addError($e->getMessage());
+                }
+
+            } else {
                 /**
-                 * Redirect to index/All posts page
+                 *
+                 * Display forms with error message and content.
+                 *
                  */
-                header('Location: /posts/index');
-
+                View::renderTemplate('Posts/editPost.html', [
+                    'id' => $id,
+                    'title' => $title,
+                    'content' => $content,
+                    'errors' => $error
+                ]);
                 return;
-
-            } catch (PDOException $e) {
-                echo $e->getMessage();
             }
 
         } else {
+
+            /**
+             * Its not POST and we render form with existing content
+             */
 
             $post = PostService::readOne($id);
 
@@ -151,29 +192,28 @@ class PostsController extends \Core\Controller
 
     /**
      *
-     * Delete Action
+     * Delete action
      *
      */
     public function deleteAction()
     {
-        $id   = $_POST['id'];
 
+        $id = $this->getRouteParams("id");
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             try {
 
-            $posts = PostService::delete($id);
+                $posts = PostService::delete($id);
 
-            View::renderTemplate('Posts/index.html', [
-                'posts' => $posts
-            ]);
-            return;
+                /**
+                 * Redirect to index/All posts page
+                 */
+                header('Location: /posts/index');
+
 
             } catch (PDOException $e) {
-
-                echo $e->getMessage();
-
+                $this->addError($e->getMessage());
             }
         }
 
