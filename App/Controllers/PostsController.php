@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use \Core\View;
-use PDO;
 use App\Models\PostService;
 
 /**
@@ -19,11 +18,14 @@ class PostsController extends \Core\Controller
      *
      * @return void
      */
+
     public function indexAction()
     {
         $posts = PostService::readAll();
 
-
+        /**
+         * Render template for all posts
+         */
         View::renderTemplate('Posts/index.html', [
             'posts' => $posts
         ]);
@@ -34,9 +36,13 @@ class PostsController extends \Core\Controller
      *
      * @return void
      */
+
     public function addNewAction()
     {
 
+        /**
+         * Checking is it post - create post in database - redirect to index
+         */
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $title   = $_POST['title'];
@@ -58,17 +64,20 @@ class PostsController extends \Core\Controller
                 $this->addError($error_message);
             }
 
-            $error = $this->getErrors();
-
-            if (empty($error)) {
+            /**
+             * IF empty errors
+             */
+            if (empty($this->getErrors())) {
 
                 try {
 
                     $post = PostService::create($title,$content);
 
+
                     /**
                      * Redirect to index/All posts page
                      */
+
                     header('Location: index');
 
 
@@ -80,13 +89,14 @@ class PostsController extends \Core\Controller
 
             /**
              *
-             * Display forms with error message and content.
+             * IF EROOR is not empty - Display forms with error message and content.
              *
              */
+
             View::renderTemplate('Posts/addPost.html', [
                 'title' => $title,
                 'content' => $content,
-                'errors' => $error
+                'errors' => $this->getErrors()
             ]);
             return;
         }
@@ -110,7 +120,7 @@ class PostsController extends \Core\Controller
 
         /**
          *
-         * Check is it POST.
+         * Checking is it POST - Take new content - Validate data - Update action
          */
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -133,12 +143,11 @@ class PostsController extends \Core\Controller
                 $this->addError($error_message);
             }
 
-            $error = $this->getErrors();
-
             /**
              * Check errors
              */
-            if (empty($error)) {
+
+            if (empty($this->getErrors())) {
 
                 try {
 
@@ -154,20 +163,22 @@ class PostsController extends \Core\Controller
                     $this->addError($e->getMessage());
                 }
 
-            } else {
-                /**
-                 *
-                 * Display forms with error message and content.
-                 *
-                 */
-                View::renderTemplate('Posts/editPost.html', [
-                    'id' => $id,
-                    'title' => $title,
-                    'content' => $content,
-                    'errors' => $error
-                ]);
-                return;
             }
+
+            /**
+             *
+             * Display forms with error message and content.
+             *
+             */
+
+            View::renderTemplate('Posts/editPost.html', [
+                'id' => $id,
+                'title' => $title,
+                'content' => $content,
+                'errors' => $this->getErrors()
+            ]);
+            return;
+
 
         } else {
 
@@ -198,7 +209,18 @@ class PostsController extends \Core\Controller
     public function deleteAction()
     {
 
+        /**
+         * Take id from route
+         */
+
         $id = $this->getRouteParams("id");
+
+
+        /**
+         *
+         * Check is it post - delete post
+         *
+         */
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
