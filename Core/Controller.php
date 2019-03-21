@@ -7,18 +7,19 @@ namespace Core;
  *
  * PHP version 5.4
  */
-abstract class Controller
-{
+abstract class Controller {
 
     /**
      * Parameters from the matched route
      * @var array
      */
+
     protected $route_params = [];
 
     /**
      * @var array
      */
+
     public $errors = [];
 
 
@@ -28,6 +29,7 @@ abstract class Controller
      * @param null $type - Type can be controler or action or id
      * @return array
      */
+
     public function getRouteParams($type = null)
     {
         if(isset($this->route_params[$type])) {
@@ -45,6 +47,7 @@ abstract class Controller
      *
      * @return void
      */
+
     public function __construct($route_params)
     {
         $this->route_params = $route_params;
@@ -61,6 +64,7 @@ abstract class Controller
      *
      * @return void
      */
+
     public function __call($name, $args)
     {
         $method = $name . 'Action';
@@ -82,6 +86,7 @@ abstract class Controller
      *
      * @return void
      */
+
     protected function before()
     {
     }
@@ -91,6 +96,7 @@ abstract class Controller
      *
      * @return void
      */
+
     protected function after()
     {
         echo "After action";
@@ -101,6 +107,7 @@ abstract class Controller
      * Get errors
      * @return array
      */
+
     public function getErrors()
     {
         return $this->errors;
@@ -110,6 +117,7 @@ abstract class Controller
      * Adding errors
      * @param $error_message
      */
+
     public function addError($error_message)
     {
         array_push($this->errors, $error_message);
