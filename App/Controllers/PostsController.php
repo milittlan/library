@@ -10,8 +10,7 @@ use App\Models\PostService;
  *
  * PHP version 5.4
  */
-class PostsController extends \Core\Controller
-{
+class PostsController extends \Core\Controller  {
 
     /**
      * Show the index page
@@ -21,11 +20,14 @@ class PostsController extends \Core\Controller
 
     public function indexAction()
     {
-        $posts = PostService::readAll();
+
+        $postServices = new PostService();
+        $posts = $postServices->readAll();
 
         /**
          * Render template for all posts
          */
+
         View::renderTemplate('Posts/index.html', [
             'posts' => $posts
         ]);
@@ -43,6 +45,7 @@ class PostsController extends \Core\Controller
         /**
          * Checking is it post - create post in database - redirect to index
          */
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $title   = $_POST['title'];
@@ -67,17 +70,17 @@ class PostsController extends \Core\Controller
             /**
              * IF empty errors
              */
+
             if (empty($this->getErrors())) {
 
                 try {
 
-                    $post = PostService::create($title,$content);
+                    $postServices = new PostService();
+
+                    $post = $postServices->create($title, $content);
 
 
-                    /**
-                     * Redirect to index/All posts page
-                     */
-
+                    /* Redirect to index/All posts page */
                     header('Location: index');
 
 
@@ -105,23 +108,23 @@ class PostsController extends \Core\Controller
          *
          * Render empty form when for action add new post
          */
+
         View::renderTemplate('Posts/addPost.html');
     }
 
     /**
-     *
      * Edit action
-     *
      */
+
     public function editAction()
     {
 
-        $id = $this->getRouteParams("id");
+        $id = $this->getRouteParams('id');
 
         /**
-         *
          * Checking is it POST - Take new content - Validate data - Update action
          */
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $id   = $_POST['id'];
@@ -151,7 +154,9 @@ class PostsController extends \Core\Controller
 
                 try {
 
-                    $post = PostService::update($id, $title, $content);
+                    $postServices = new PostService();
+
+                    $post = $postServices->update($id, $title, $content);
 
                     /**
                      * Redirect to index/All posts page
@@ -166,9 +171,7 @@ class PostsController extends \Core\Controller
             }
 
             /**
-             *
              * Display forms with error message and content.
-             *
              */
 
             View::renderTemplate('Posts/editPost.html', [
@@ -186,7 +189,8 @@ class PostsController extends \Core\Controller
              * Its not POST and we render form with existing content
              */
 
-            $post = PostService::readOne($id);
+            $postServices = new PostService();
+            $post = $postServices->readOne($id);
 
             $id = $post->getId();
             $title = $post->getTitle();
@@ -202,35 +206,30 @@ class PostsController extends \Core\Controller
     }
 
     /**
-     *
      * Delete action
-     *
      */
+
     public function deleteAction()
     {
 
-        /**
-         * Take id from route
-         */
+        /* Take id from route */
 
         $id = $this->getRouteParams("id");
 
 
         /**
-         *
          * Check is it post - delete post
-         *
          */
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             try {
 
-                $posts = PostService::delete($id);
+                $postServices = new PostService();
+                $post = $postServices->delete($id);
 
-                /**
-                 * Redirect to index/All posts page
-                 */
+                /* Redirect to index/All posts page */
+
                 header('Location: /posts/index');
 
 

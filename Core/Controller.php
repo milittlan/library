@@ -17,6 +17,12 @@ abstract class Controller
     protected $route_params = [];
 
     /**
+     * @var array
+     */
+    public $errors = [];
+
+
+    /**
      * Return all route params if type is not sent. If type is sent it returns specified param
      *
      * @param null $type - Type can be controler or action or id
@@ -90,10 +96,6 @@ abstract class Controller
         echo "After action";
     }
 
-    /**
-     * @var array
-     */
-    public $errors = [];
 
     /**
      * Get errors

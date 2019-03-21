@@ -9,19 +9,16 @@ use App\Models\Entity\Post;
  * Post service (We rename this into SERVICE instead MODEL)
  */
 
-class PostService extends \Core\Model {
+class PostService extends \Core\Model   {
 
     /**
      * Get all the posts as an array (array of Entities)
      *
      * @return array
      */
-    public static function readAll()
+    public function readAll()
     {
-        /**
-         * DB connection
-         */
-
+        /* DB connection */
         $db = static::getDB();
 
 
@@ -33,10 +30,7 @@ class PostService extends \Core\Model {
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-        /**
-         * Create empty array for entites
-         */
-
+        /* Create empty array for entites */
         $posts = [];
 
 
@@ -56,17 +50,12 @@ class PostService extends \Core\Model {
             $post->setContent($content);
             $post->setTitle($title);
 
-            /**
-             * add entity to array
-             */
+            /* add entity to array */
             array_push($posts,  $post);
         }
 
 
-        /**
-         * Return array of entities
-         */
-
+        /* Return array of entities */
         return $posts;
 
     }
@@ -76,7 +65,7 @@ class PostService extends \Core\Model {
      * @return Post
      *
      */
-    public static function readOne($id){
+    public function readOne($id){
 
         /**
          * DB connection
@@ -110,9 +99,7 @@ class PostService extends \Core\Model {
         $post->setTitle($title);
 
 
-        /**
-         * Return Entity
-         */
+        /* Return Entity */
 
         return $post;
 
@@ -124,7 +111,7 @@ class PostService extends \Core\Model {
      * @param $content
      * @return mixed
      */
-    public static function create($title, $content)
+    public function create($title, $content)
     {
 
         /**
@@ -163,7 +150,7 @@ class PostService extends \Core\Model {
      * @param $content
      * @return bool
      */
-    public static function update($id, $title, $content)
+    public function update($id, $title, $content)
     {
         /**
          * Take existing value from post
@@ -176,9 +163,7 @@ class PostService extends \Core\Model {
         $post->setTitle($title);
 
 
-        /**
-         * DB connection
-         */
+        /* DB connection */
 
         $db = static::getDB();
 
@@ -216,12 +201,10 @@ class PostService extends \Core\Model {
      * @param $id
      * @return bool
      */
-    public static function delete($id)
+    public function delete($id)
     {
 
-        /**
-         * DB connection
-         */
+        /* DB connection */
 
         $db = static::getDB();
 
