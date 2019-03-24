@@ -32,10 +32,13 @@
 
                     <thead>
                         <tr>
-                            <th>id</th>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Publisher</th>
+                            <th>#</th>
+                            <th>Naslov</th>
+                            <th>alias</th>
+                            <th>Autor</th>
+                            <th>Izdavac</th>
+                            <th>Kategorija</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
 
@@ -44,11 +47,14 @@
                     {% for book in books %}
 
                     <tr>
-                        <th>{{ book.id }}</th>
+                        <td>{{ book.id }}</td>
                         <td>{{ book.title }}</td>
+                        <td>{{ book.alias }}</td>
                         <td>{{ book.author }}</td>
                         <td>{{ book.publisher }}</td>
-
+                        <td>{{ book.category_id }}</td>
+                        <td>{{ book.status }}</td>
+                        <td><a href="/books/edit/{{ book.id }}">Edit</a></td>
                     </tr>
                     {% endfor %}
 
@@ -60,6 +66,7 @@
         </div>
     </div>
 </div>
+
 {% endblock %}
 
 

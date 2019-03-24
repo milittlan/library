@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Posts{% endblock %}
+{% block title %}Books category{% endblock %}
 
 {% block body %}
 
@@ -33,19 +33,25 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Title</th>
-                            <th>Content</th>
+                            <th>Parentid</th>
+                            <th>level</th>
+                            <th>name</th>
+                            <th>alias</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
 
-                    {% for post in posts %}
+                    {% for category in categories %}
 
                     <tr>
-                        <td>{{ post.id }}</td>
-                        <td>{{ post.title }}</td>
-                        <td>{{ post.content }}</td>
+                        <td>{{ category.id }}</td>
+                        <td>{{ category.parent_id }}</td>
+                        <td>{{ category.level }}</td>
+                        <td>{{ category.name }}</td>
+                        <td>{{ category.alias }}</td>
+                        <td><a href="/bookscategory/edit/{{ category.id }}">Edit</a></td>
                     </tr>
                     {% endfor %}
 
