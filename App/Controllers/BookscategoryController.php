@@ -55,13 +55,20 @@ class BookscategoryController extends \Core\Controller {
 
             /**
              *
-             * Validate title
+             * Validate name alias
              * For testing we are checking does field have exact content.
              *
              */
-            if ($name == 'aaa') {
-                $error_message = 'Greska - polje Title ne moze da ima ovaj sadrzaj';
+            if (!is_numeric($parent_id)) {
+                $error_message = 'Greska - polje Parent ID  moze da sadrzi samo brojeve';
                 $this->addError($error_message);
+            }
+
+            if (empty($alias)) {
+                $alias = strtolower($name);
+                $alias = str_replace(' ', '-', $alias);
+            } else {
+                $alias = str_replace(' ', '-', $alias);
             }
 
             /**
@@ -108,7 +115,12 @@ class BookscategoryController extends \Core\Controller {
          * Render empty form when for action add new category
          */
 
-        View::renderTemplate('Bookscategory/addCategory.html');
+        $BookscategoryServices = new BookscategoryService();
+        $categories = $BookscategoryServices->readAllCategories();
+
+        View::renderTemplate('Bookscategory/addCategory.html', [
+            'categories' => $categories
+        ]);
     }
 
     /**
