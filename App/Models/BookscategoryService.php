@@ -169,6 +169,14 @@ class BookscategoryService extends \Core\Model {
     public function create ($parent_id, $level, $name, $alias)
     {
 
+        $category = new Category();
+
+
+        $category->setParentId($parent_id);
+        $category->setLevel($level);
+        $category->setName($name);
+        $category->setAlias($alias);
+
         /**
          * DB connection
          */
@@ -181,6 +189,11 @@ class BookscategoryService extends \Core\Model {
          */
 
         $stmt = $db->prepare("INSERT INTO books_category (parent_id, level, name, alias) VALUES (:parent_id, :level, :name, :alias)");
+
+        $parent_id = $category->getParentId();
+        $level = $category->getLevel();
+        $name = $category->getName();
+        $alias = $category->getAlias();
 
         $stmt->bindParam(':parent_id', $parent_id, PDO::PARAM_STR);
         $stmt->bindParam(':level', $level, PDO::PARAM_STR);
@@ -270,6 +283,10 @@ class BookscategoryService extends \Core\Model {
     public function delete($id)
     {
 
+        $category = new Category();
+
+        $category->setId($id);
+
         /* DB connection */
 
         $db = static::getDB();
@@ -280,7 +297,10 @@ class BookscategoryService extends \Core\Model {
         */
 
         $stmt = $db->prepare("DELETE FROM books_category WHERE id = :id");
-        $stmt->bindParam(':id', $id);
+
+        $id = $category->getId();
+
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
 
         $results = $stmt->execute();
 

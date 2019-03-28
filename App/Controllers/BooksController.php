@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\BookService;
+use App\Models\BookscategoryService;
 use \Core\View;
 
 /**
@@ -42,6 +43,9 @@ class BooksController extends \Core\Controller  {
     public function addNewAction()
     {
 
+        $BookscategoryServices = new BookscategoryService();
+        $categories = $BookscategoryServices->readAll();
+
         /**
          * Checking is it post - create book in database - redirect to index
          */
@@ -64,6 +68,14 @@ class BooksController extends \Core\Controller  {
             if ($title == 'aaa') {
                 $error_message = 'Greska - polje Title ne moze da ima ovaj sadrzaj';
                 $this->addError($error_message);
+            }
+
+            if (empty($alias)) {
+                $alias = strtolower($title);
+                $alias = preg_replace('/\s+/', '_', $alias);
+            } else {
+                $alias = strtolower($alias);
+                $alias = preg_replace('/\s+/', '_', $alias);
             }
 
             /**
@@ -102,7 +114,9 @@ class BooksController extends \Core\Controller  {
                 'publisher' => $publisher,
                 'category_id' => $category_id,
                 'status' => $status,
+                'categories' => $categories,
                 'errors' => $this->getErrors()
+
             ]);
             return;
         }
@@ -112,7 +126,10 @@ class BooksController extends \Core\Controller  {
          * Render empty form when for action add new book
          */
 
-        View::renderTemplate('Books/addBook.html');
+        View::renderTemplate('Books/addBook.html', [
+            'categories' => $categories
+            ]);
+        return;
     }
 
     /**
@@ -139,7 +156,7 @@ class BooksController extends \Core\Controller  {
             $status   = $_POST['status'];
 
             /**
-             * ITs post!
+             * Its post!
              * validation of updated content
              */
 
@@ -148,6 +165,13 @@ class BooksController extends \Core\Controller  {
                 $this->addError($error_message);
             }
 
+            if (empty($alias)) {
+                $alias = strtolower($title);
+                $alias = preg_replace('/\s+/', '_', $alias);
+            } else {
+                $alias = strtolower($alias);
+                $alias = preg_replace('/\s+/', '_', $alias);
+            }
 
 
             /**

@@ -84,7 +84,6 @@ class BookService extends \Core\Model {
 
         return $book;
 
-
     }
 
     /**
@@ -99,6 +98,15 @@ class BookService extends \Core\Model {
     public function create($title, $alias, $author, $publisher, $category_id, $status)
     {
 
+        $book = new Book();
+
+        $book->setTitle($title);
+        $book->setAlias($alias);
+        $book->setAuthor($author);
+        $book->setPublisher($publisher);
+        $book->setCategory($category_id);
+        $book->setStatus($status);
+
         /**
          * DB connection
          */
@@ -111,6 +119,16 @@ class BookService extends \Core\Model {
          */
 
         $stmt = $db->prepare("INSERT INTO books (title, alias, author, publisher, category_id, status) VALUES (:title, :alias, :author, :publisher, :category_id, :status)");
+
+
+        $title = $book->getTitle();
+        $alias = $book->getAlias();
+        $author = $book->getAuthor();
+        $publisher = $book->getPublisher();
+        $category_id = $book->getCategory();
+        $status = $book->getStatus();
+
+
         $stmt->bindParam(':title', $title, PDO::PARAM_STR);
         $stmt->bindParam(':alias', $alias, PDO::PARAM_STR);
         $stmt->bindParam(':author', $author, PDO::PARAM_STR);
@@ -212,6 +230,10 @@ class BookService extends \Core\Model {
     public function delete($id)
     {
 
+        $book = new Book();
+
+        $book->setId($id);
+
         /* DB connection */
 
         $db = static::getDB();
@@ -222,7 +244,10 @@ class BookService extends \Core\Model {
         */
 
         $stmt = $db->prepare("DELETE FROM books WHERE id = :id");
-        $stmt->bindParam(':id', $id);
+
+        $id = $book->getId();
+
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
 
         $results = $stmt->execute();
 

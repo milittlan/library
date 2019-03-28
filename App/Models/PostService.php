@@ -114,6 +114,11 @@ class PostService extends \Core\Model   {
     public function create($title, $content)
     {
 
+        $post = new Post();
+
+        $post->setTitle($title);
+        $post->setContent($content);
+
         /**
          * DB connection
          */
@@ -122,14 +127,19 @@ class PostService extends \Core\Model   {
 
 
         /*
-         * Query - Select all posts from database
+         * Query - Insert post into database
          */
 
         $stmt = $db->prepare("INSERT INTO posts (title, content, created_at) VALUES (:title, :content, NOW())");
+
+        $title = $post->getTitle();
+        $content = $post->getContent();
+
         $stmt->bindParam(':title', $title, PDO::PARAM_STR);
         $stmt->bindParam(':content', $content, PDO::PARAM_STR);
 
         $results = $stmt->execute();
+
 
         /**
          * Return boolean
@@ -203,6 +213,9 @@ class PostService extends \Core\Model   {
      */
     public function delete($id)
     {
+        $post = new Post();
+
+        $post->setId($id);
 
         /* DB connection */
 
@@ -214,7 +227,10 @@ class PostService extends \Core\Model   {
         */
 
         $stmt = $db->prepare("DELETE FROM posts WHERE id = :id");
-        $stmt->bindParam(':id', $id);
+
+        $id = $post->getId();
+
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
 
         $results = $stmt->execute();
 
