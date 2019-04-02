@@ -26,7 +26,7 @@ class RolesController extends \Core\Controller
         $roles = $roleServices->readAll();
 
         /**
-         * Render template for all posts
+         * Render template for all roles
          */
 
         View::renderTemplate('Roles/index.html', [

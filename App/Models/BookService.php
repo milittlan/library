@@ -25,19 +25,51 @@ class BookService extends \Core\Model {
                                 ORDER BY id');
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return $results;
+            /* Create empty array for entites */
+            $books = [];
 
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
+            /**
+             * Check all posts - take value from array and put data array into Entity
+             */
+
+            foreach($results as $item) {
+
+                $id = $item['id'];
+                $title = $item['title'];
+                $alias = $item['alias'];
+                $author = $item['author'];
+                $publisher = $item['publisher'];
+                $category_id = $item['category_id'];
+                $status = $item['status'];
+
+                $book = new Book();
+
+                $book->setId($id);
+                $book->setTitle($title);
+                $book->setAlias($alias);
+                $book->setAuthor($author);
+                $book->setPublisher($publisher);
+                $book->setCategory($category_id);
+                $book->setStatus($status);
+
+                /* add entity to array */
+                array_push($books,  $book);
+            }
+
+           /* Return array of entities */
+           return $books;
+
+       } catch (PDOException $e) {
+           echo $e->getMessage();
+       }
+   }
 
 
-    /**
-     * @param $id
-     * @return Book
-     *
-     */
+   /**
+    * @param $id
+    * @return Book
+    *
+    */
     public function readOne($id){
 
         /**

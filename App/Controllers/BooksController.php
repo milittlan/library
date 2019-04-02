@@ -56,7 +56,7 @@ class BooksController extends \Core\Controller  {
             $alias = $_POST['alias'];
             $author = $_POST['author'];
             $publisher = $_POST['publisher'];
-            $category_id = $_POST['category_id'];
+            $category_id = $_POST['categoryid'];
             $status = 0;
 
             /**
@@ -141,6 +141,9 @@ class BooksController extends \Core\Controller  {
 
         $id = $this->getRouteParams('id');
 
+        $BookscategoryServices = new BookscategoryService();
+        $categories = $BookscategoryServices->readAll();
+
         /**
          * Checking is it POST - Take new content - Validate data - Update action
          */
@@ -152,7 +155,7 @@ class BooksController extends \Core\Controller  {
             $alias = $_POST['alias'];
             $author   = $_POST['author'];
             $publisher   = $_POST['publisher'];
-            $category_id   = $_POST['category_id'];
+            $category_id   = $_POST['categoryid'];
             $status   = $_POST['status'];
 
             /**
@@ -208,6 +211,7 @@ class BooksController extends \Core\Controller  {
                 'alias' => $alias,
                 'author' => $author,
                 'publisher' => $publisher,
+                'categories' => $categories,
                 'category_id' => $category_id,
                 'status' => $status,
                 'errors' => $this->getErrors()
@@ -239,6 +243,7 @@ class BooksController extends \Core\Controller  {
                 'author' => $author,
                 'publisher' => $publisher,
                 'category_id' => $category_id,
+                'categories' => $categories,
                 'status' => $status
             ]);
         }

@@ -38,7 +38,7 @@
                     <div class="form-group form-float">
                         <div class="form-line">
                             <input type="text" class="form-control" name="title" value="{{ title }}" required>
-                            <label class="form-label">naslov</label>
+                            <label class="form-label">Naslov</label>
                         </div>
                     </div>
 
@@ -52,21 +52,27 @@
                     <div class="form-group form-float">
                         <div class="form-line">
                             <input type="text" class="form-control" name="author" required value="{{ author }}">
-                            <label class="form-label">Ime kategorije</label>
+                            <label class="form-label">Autor</label>
                         </div>
                     </div>
 
                     <div class="form-group form-float">
                         <div class="form-line">
                             <input type="text" class="form-control" name="publisher" required value="{{ publisher }}">
-                            <label class="form-label">Alias</label>
+                            <label class="form-label">Izdavac</label>
                         </div>
                     </div>
 
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="text" class="form-control" name="category_id" required value="{{ category_id }}">
-                            <label class="form-label">Alias</label>
+                            <select class="form-control show-tick" name="categoryid">
+                                <option value="">{{ category_id }}</option>
+
+                                {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endfor %}
+
+                            </select>
                         </div>
                     </div>
 
