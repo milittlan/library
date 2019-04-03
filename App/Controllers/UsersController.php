@@ -53,8 +53,11 @@ class UsersController extends \Core\Controller
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $name   = $_POST['name'];
-            $description = $_POST['description'];
+            $firstname   = $_POST['firstname'];
+            $lastname = $_POST['lastname'];
+            $email = $_POST['email'];
+            $roleid = $_POST['roleid'];
+            $status = $_POST['status'];
 
             /**
              *
@@ -62,7 +65,7 @@ class UsersController extends \Core\Controller
              * For testing we are checking does fields have exact content.
              *
              */
-            if ($name == 'aaa') {
+            if ($firstname == 'aaa') {
                 $error_message = 'Greska - polje Name ne moze da ima ovaj sadrzaj';
                 $this->addError($error_message);
             }
@@ -77,7 +80,7 @@ class UsersController extends \Core\Controller
 
                     $userServics = new UserService();
 
-                    $user = $userServics->create($name, $description);
+                    $user = $userServics->create($firstname, $lastname, $email, $roleid, $status);
 
 
                     /* Redirect to index/All posts page */
@@ -97,8 +100,11 @@ class UsersController extends \Core\Controller
              */
 
             View::renderTemplate('Users/addUser.html', [
-                'name' => $name,
-                'description' => $description,
+                'firstname' => $firstname,
+                'lastname' => $lastname,
+                'email' => $email,
+                'roleid' => $roleid,
+                'status' => $status,
                 'errors' => $this->getErrors()
             ]);
             return;
@@ -131,15 +137,18 @@ class UsersController extends \Core\Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $id   = $_POST['id'];
-            $name   = $_POST['name'];
-            $description = $_POST['description'];
+            $firstname   = $_POST['firstname'];
+            $lastname = $_POST['lastname'];
+            $email = $_POST['email'];
+            $roleid = $_POST['roleid'];
+            $status = $_POST['status'];
 
             /**
              * ITs User!
              * validation of updated content
              */
 
-            if ($name == 'aaa') {
+            if ($firstname == 'aaa') {
                 $error_message = 'Greska - polje NAME ne moze da ima ovaj sadrzaj';
                 $this->addError($error_message);
             }
@@ -155,7 +164,7 @@ class UsersController extends \Core\Controller
 
                     $userServices = new UserService();
 
-                    $user = $userServices->update($id, $firstname, $lastname, $email, $password, $role_id, $status);
+                    $user = $userServices->update($id, $firstname, $lastname, $email, $password, $roleid, $status);
 
                     /**
                      * Redirect to index/All posts page
@@ -200,7 +209,7 @@ class UsersController extends \Core\Controller
             $lastname = $user->getLastname();
             $email = $user->getEmail();
             $password = $user->getPassword();
-            $role_id = $user->getRoleId();
+            $roleid = $user->getRole();
             $status = $user->getStatus();
 
             View::renderTemplate('Users/editUser.html', [
@@ -209,7 +218,7 @@ class UsersController extends \Core\Controller
                 'lastname' => $lastname,
                 'email' => $email,
                 'password' => $password,
-                'role_id' => $role_id,
+                'roleid' => $roleid,
                 'status' => $status
             ]);
         }

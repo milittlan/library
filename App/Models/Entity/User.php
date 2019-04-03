@@ -10,7 +10,7 @@ class User extends \App\Models\RoleService{
     private $lastname;
     private $email;
     private $password;
-    private $role_id;
+    private $role;
     private $status;
 
     /**
@@ -96,17 +96,17 @@ class User extends \App\Models\RoleService{
     /**
      * @return mixed
      */
-    public function getRoleId()
+    public function getRole()
     {
-        return $this->role_id;
+        return $this->role;
     }
 
     /**
-     * @param mixed $role_id
+     * @param mixed $role
      */
-    public function setRoleId($role_id): void
+    public function setRole($role): void
     {
-        $this->role_id = $role_id;
+        $this->role = $role;
     }
 
     /**
@@ -124,5 +124,7 @@ class User extends \App\Models\RoleService{
     {
         $this->status = $status;
     }
+
+
 
 }

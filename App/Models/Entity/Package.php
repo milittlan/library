@@ -9,7 +9,6 @@ class Package extends \App\Models\PackageService {
     private $name;
     private $value;
     private $duration;
-    private $user_id;
 
     /**
      * @return mixed
@@ -74,24 +73,5 @@ class Package extends \App\Models\PackageService {
     {
         $this->duration = $duration;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getUserId()
-    {
-        return $this->userid;
-    }
-
-    /**
-     * @param mixed $user_id
-     */
-    public function setUserId($user_id): void
-    {
-        $this->userid = $user_id;
-    }
-
-
-
 
 }

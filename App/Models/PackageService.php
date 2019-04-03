@@ -26,7 +26,7 @@ class PackageService extends \Core\Model   {
          * Query - Select all posts from database
          */
 
-        $stmt = $db->query('SELECT id, name, value, duration, user_id FROM packages ORDER BY id');
+        $stmt = $db->query('SELECT id, name, value, duration FROM packages ORDER BY id');
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
@@ -44,7 +44,6 @@ class PackageService extends \Core\Model   {
             $name = $item['name'];
             $value = $item['value'];
             $duration = $item['duration'];
-            $user_id = $item['user_id'];
 
             $package = new Package();
 
@@ -52,7 +51,6 @@ class PackageService extends \Core\Model   {
             $package->setName($name);
             $package->setValue($value);
             $package->setDuration($duration);
-            $package->setUserId($user_id);
 
 
             /* add entity to array */
@@ -96,7 +94,6 @@ class PackageService extends \Core\Model   {
         $name = $results['name'];
         $value = $results['value'];
         $duration = $results['duration'];
-        $user_id = $results['user_id'];
 
         $package = new Package();
 
@@ -104,8 +101,6 @@ class PackageService extends \Core\Model   {
         $package->setName($name);
         $package->setValue($value);
         $package->setDuration($duration);
-        $package->setUserId($user_id);
-
 
         /* Return Entity */
 
@@ -118,7 +113,6 @@ class PackageService extends \Core\Model   {
      * @param $name
      * @param $value
      * @param $duration
-     * @param $user_id
      * @return bool
      *
      */
@@ -130,7 +124,7 @@ class PackageService extends \Core\Model   {
         $package->setName($name);
         $package->setValue($value);
         $package->setDuration($duration);
-        $package->setUserId($user_id);
+
 
         /**
          * DB connection
@@ -148,12 +142,10 @@ class PackageService extends \Core\Model   {
         $name = $package->getName();
         $value = $package->getValue();
         $duration = $package->getDuration();
-        $user_id = $package->getUserId();
 
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':value', $value, PDO::PARAM_STR);
         $stmt->bindParam(':duration', $duration, PDO::PARAM_STR);
-        $stmt->bindParam(':userid', $user_id, PDO::PARAM_STR);
 
         $results = $stmt->execute();
 
@@ -179,7 +171,7 @@ class PackageService extends \Core\Model   {
      * @param $user_id
      * @return bool
      */
-    public function update($id, $name, $value, $duration, $user_id)
+    public function update($id, $name, $value, $duration)
     {
         /**
          * Take existing value from post
@@ -191,7 +183,6 @@ class PackageService extends \Core\Model   {
         $package->setName($name);
         $package->setValue($value);
         $package->setDuration($duration);
-        $package->setUserId($user_id);
 
 
         /* DB connection */
@@ -203,19 +194,17 @@ class PackageService extends \Core\Model   {
          * Query - Update packages
          */
 
-        $stmt = $db->prepare("UPDATE packages SET name = :name, value = :value, duration = :duration, user_id = :userid WHERE id = :id");
+        $stmt = $db->prepare("UPDATE packages SET name = :name, value = :value, duration = :duration WHERE id = :id");
 
         $id = $package->getId();
         $name = $package->getName();
         $value = $package->getValue();
         $duration = $package->getDuration();
-        $user_id = $package->getUserId();
 
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':value', $value, PDO::PARAM_STR);
         $stmt->bindParam(':duration', $duration, PDO::PARAM_STR);
-        $stmt->bindParam(':userid', $user_id, PDO::PARAM_STR);
 
         $results = $stmt->execute();
 

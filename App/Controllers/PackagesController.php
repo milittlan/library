@@ -53,7 +53,6 @@ class PackagesController extends \Core\Controller
             $name   = $_POST['name'];
             $value = $_POST['value'];
             $duration = $_POST['duration'];
-            $user_id = $_POST['userid'];
 
             /**
              *
@@ -101,7 +100,6 @@ class PackagesController extends \Core\Controller
                 'name' => $name,
                 'value' => $value,
                 'duration' => $duration,
-                'user_id' => $user_id,
                 'errors' => $this->getErrors()
             ]);
             return;
@@ -134,7 +132,6 @@ class PackagesController extends \Core\Controller
             $name   = $_POST['name'];
             $value = $_POST['value'];
             $duration = $_POST['duration'];
-            $user_id = $_POST['user_id'];
 
             /**
              * ITs Package!
@@ -181,7 +178,6 @@ class PackagesController extends \Core\Controller
                 'name' => $name,
                 'value' => $value,
                 'duration' => $duration,
-                'user_id' => $user_id,
                 'errors' => $this->getErrors()
             ]);
             return;
@@ -200,14 +196,13 @@ class PackagesController extends \Core\Controller
             $name = $package->getName();
             $value = $package->getValue();
             $duration = $package->getDuration();
-            $user_id = $package->getUserId();
+
 
             View::renderTemplate('Packages/editPackage.html', [
                 'id' => $id,
                 'name' => $name,
                 'value' => $value,
-                'duration' => $duration,
-                'user_id' => $user_id
+                'duration' => $duration
             ]);
         }
 

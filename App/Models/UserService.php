@@ -44,7 +44,7 @@ class UserService extends \Core\Model   {
             $firstname = $item['firstname'];
             $lastname = $item['lastname'];
             $email = $item['email'];
-            $role_id = $item['role_id'];
+            $role = $item['role_id'];
             $status = $item['status'];
 
 
@@ -54,7 +54,7 @@ class UserService extends \Core\Model   {
             $user->setFirstname($firstname);
             $user->setLastname($lastname);
             $user->setEmail($email);
-            $user->setRoleId($role_id);
+            $user->setRole($role);
             $user->setStatus($status);
 
             /* add entity to array */
@@ -99,7 +99,7 @@ class UserService extends \Core\Model   {
         $firstname = $results['firstname'];
         $lastname = $results['lastname'];
         $email = $results['email'];
-        $role_id = $results['role_id'];
+        $role = $results['role_id'];
         $status = $results['status'];
 
         $user = new User();
@@ -108,7 +108,7 @@ class UserService extends \Core\Model   {
         $user->setFirstname($firstname);
         $user->setLastname($lastname);
         $user->setEmail($email);
-        $user->setRoleId($role_id);
+        $user->setRole($role);
         $user->setStatus($status);
 
 
@@ -128,7 +128,7 @@ class UserService extends \Core\Model   {
      * @param $status
      * @return bool
      */
-    public function create ($firstname, $lastname, $email, $password, $role_id, $status)
+    public function create ($firstname, $lastname, $email, $password, $role, $status)
     {
 
         $user = new User();
@@ -137,7 +137,7 @@ class UserService extends \Core\Model   {
         $user->setLastname($lastname);
         $user->setEmail($email);
         $user->setPassword($password);
-        $user->setRoleid($role_id);
+        $user->setRoleid($role);
         $user->setStatus($status);
 
 
@@ -158,14 +158,14 @@ class UserService extends \Core\Model   {
         $lastname = $user->getLastname();
         $email = $user->getEmail();
         $password = $user->getPassword();
-        $role_id = $user->getRoleId();
+        $role = $user->getRole();
         $status = $user->getStatus();
 
         $stmt->bindParam(':firstname', $firstname, PDO::PARAM_STR);
         $stmt->bindParam(':lastname', $lastname, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
-        $stmt->bindParam(':role_id', $role_id, PDO::PARAM_STR);
+        $stmt->bindParam(':role_id', $role, PDO::PARAM_STR);
         $stmt->bindParam(':status', $status, PDO::PARAM_STR);
 
         $results = $stmt->execute();
@@ -190,7 +190,7 @@ class UserService extends \Core\Model   {
      * @param $description
      * @return bool
      */
-    public function update ($id, $firstname, $lastname, $email, $password, $role_id, $status)
+    public function update ($id, $firstname, $lastname, $email, $password, $role, $status)
     {
         /**
          * Take existing value from post
@@ -203,7 +203,7 @@ class UserService extends \Core\Model   {
         $user->setLastname($lastname);
         $user->setEmail($email);
         $user->setPassword($password);
-        $user->setRoleId($role_id);
+        $user->setRoleId($role);
         $user->setStatus($status);
 
 
@@ -223,7 +223,7 @@ class UserService extends \Core\Model   {
         $lastname = $user->getLastname();
         $email = $user->getEmail();
         $password = $user->getPassword();
-        $role_id = $user->getRoleId();
+        $role = $user->getRole();
         $status = $user->getStatus();
 
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
@@ -231,7 +231,7 @@ class UserService extends \Core\Model   {
         $stmt->bindParam(':lastname', $lastname, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
-        $stmt->bindParam(':role_id', $role_id, PDO::PARAM_STR);
+        $stmt->bindParam(':role_id', $role, PDO::PARAM_STR);
         $stmt->bindParam(':status', $status, PDO::PARAM_STR);
 
         $results = $stmt->execute();
