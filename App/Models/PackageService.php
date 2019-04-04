@@ -116,7 +116,7 @@ class PackageService extends \Core\Model   {
      * @return bool
      *
      */
-    public function create($name, $value, $duration, $user_id)
+    public function create($name, $value, $duration)
     {
 
         $package = new Package();
@@ -137,7 +137,7 @@ class PackageService extends \Core\Model   {
          * Query - Insert package into database
          */
 
-        $stmt = $db->prepare("INSERT INTO packages (name, value, duration, user_id) VALUES (:name, :value, :duration, :userid)");
+        $stmt = $db->prepare("INSERT INTO packages (name, value, duration) VALUES (:name, :value, :duration)");
 
         $name = $package->getName();
         $value = $package->getValue();

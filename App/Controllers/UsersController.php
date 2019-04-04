@@ -130,6 +130,9 @@ class UsersController extends \Core\Controller
 
         $id = $this->getRouteParams('id');
 
+        $roleServices = new RoleService();
+        $roles = $roleServices->readAll();
+
         /**
          * Checking is it POST - Take new content - Validate data - Update action
          */
@@ -219,7 +222,8 @@ class UsersController extends \Core\Controller
                 'email' => $email,
                 'password' => $password,
                 'roleid' => $roleid,
-                'status' => $status
+                'status' => $status,
+                'roles' => $roles
             ]);
         }
 

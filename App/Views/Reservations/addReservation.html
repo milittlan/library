@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Reservations{% endblock %}
+
+{% block body %}
+
+<div class="row clearfix">
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+        <div class="card">
+
+            <div class="header">
+                <h2> Unesite novog korisnika</h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);">Action</a></li>
+                            <li><a href="javascript:void(0);">Another action</a></li>
+                            <li><a href="javascript:void(0);">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="body">
+
+                <form id="form_validation" method="POST" action="addNew">
+
+
+                    {% if errors is not empty %}
+
+                    <div class="col-white alert-danger" style="margin-bottom: 20px;">
+                        {{ errors|join(', ') }}
+                    </div>
+
+                    {% endif %}
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <select class="form-control show-tick" name="roleid">
+                                <option value="">--Korisnik --</option>
+
+                                {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <select class="form-control show-tick" name="roleid">
+                                <option value="">--Knjiga --</option>
+
+                                {% for book in books %}
+                                <option value="{{ book.id }}">{{ book.title }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <h2 class="card-inside-title">Range</h2>
+                    <div class="input-daterange input-group" id="bs_datepicker_range_container">
+                        <div class="form-line">
+                            <input type="text" class="form-control" placeholder="Date start...">
+                        </div>
+                        <span class="input-group-addon">to</span>
+                        <div class="form-line">
+                            <input type="text" class="form-control" placeholder="Date end...">
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="description" required value="{{ description }}">
+                            <label class="form-label">Description</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="status" required value="{{ status }}">
+                            <label class="form-label">Status</label>
+                        </div>
+                    </div>
+
+
+                    <button class="btn btn-primary waves-effect" type="submit" value="Submit" name="insert-book">Unesi</button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

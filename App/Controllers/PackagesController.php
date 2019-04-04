@@ -77,7 +77,7 @@ class PackagesController extends \Core\Controller
 
                     $packageServices = new PackageService();
 
-                    $package = $packageServices->create($name, $value, $duration, $user_id);
+                    $package = $packageServices->create($name, $value, $duration);
 
 
                     /* Redirect to index/All posts page */
