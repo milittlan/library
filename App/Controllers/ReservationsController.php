@@ -40,25 +40,26 @@ class ReservationsController extends \Core\Controller
         $books = $bookServices->readAll();
 
         /**
-         * Checking is it post - create post in database - redirect to index
+         * Checking is it post - create reservation in database - redirect to index
          */
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $firstname   = $_POST['firstname'];
-            $lastname = $_POST['lastname'];
-            $email = $_POST['email'];
-            $roleid = $_POST['roleid'];
+            $userid   = $_POST['userid'];
+            $bookid = $_POST['bookid'];
+            $datecreated = $_POST['datecreated'];
+            $dateend = $_POST['dateend'];
+            $description = $_POST['description'];
             $status = $_POST['status'];
 
             /**
              *
-             * Validate title and content.
+             * Validate description.
              * For testing we are checking does fields have exact content.
              *
              */
-            if ($firstname == 'aaa') {
-                $error_message = 'Greska - polje Name ne moze da ima ovaj sadrzaj';
+            if ($description == 'aaa') {
+                $error_message = 'Greska - polje description ne moze dabude prazno';
                 $this->addError($error_message);
             }
 
@@ -70,9 +71,9 @@ class ReservationsController extends \Core\Controller
 
                 try {
 
-                    $userServics = new UserService();
+                    $reservationService = new ReservationServices();
 
-                    $user = $userServics->create($firstname, $lastname, $email, $roleid, $status);
+                    $reservation = $reservationService->create($userid, $bookid, $datecreated, $dateend, $description, $status);
 
 
                     /* Redirect to index/All posts page */
@@ -91,11 +92,12 @@ class ReservationsController extends \Core\Controller
              *
              */
 
-            View::renderTemplate('Users/addUser.html', [
-                'firstname' => $firstname,
-                'lastname' => $lastname,
-                'email' => $email,
-                'roleid' => $roleid,
+            View::renderTemplate('Reservations/addReservation.html', [
+                'userid' => $userid,
+                'bookid' => $bookid,
+                'datecreated' => $datecreated,
+                'dateend' => $dateend,
+                'description' => $description,
                 'status' => $status,
                 'errors' => $this->getErrors()
             ]);
@@ -112,6 +114,154 @@ class ReservationsController extends \Core\Controller
             'books' => $books
         ]);
         return;
+    }
+
+    /**
+     * Edit action
+     */
+
+    public function editAction()
+    {
+
+        $id = $this->getRouteParams('id');
+
+        $userServics = new UserService();
+        $users = $userServics->readAll();
+
+        $bookServices = new BookService();
+        $books = $bookServices->readAll();
+
+        /**
+         * Checking is it POST - Take new content - Validate data - Update action
+         */
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $id   = $_POST['id'];
+            $userid   = $_POST['userid'];
+            $bookid = $_POST['bookid'];
+            $datecreated = $_POST['datecreated'];
+            $dateend = $_POST['dateend'];
+            $description = $_POST['description'];
+            $status = $_POST['status'];
+
+            /**
+             * ITs Reservation!
+             * validation of updated content
+             */
+
+            if ($description == 'aaa') {
+                $error_message = 'Greska - polje Description ne moze da ima ovaj sadrzaj';
+                $this->addError($error_message);
+            }
+
+
+
+            /**
+             * Check errors
+             */
+
+            if (empty($this->getErrors())) {
+
+                try {
+
+                    $reservationServices = new ReservationServices();
+
+                    $reservation = $reservationServices->update($id, $userid, $bookid, $datecreated, $dateend, $description, $status);
+
+                    /**
+                     * Redirect to index/All posts page
+                     */
+                    header('Location: /packages/index');
+
+
+                } catch (PDOException $e) {
+                    $this->addError($e->getMessage());
+                }
+
+            }
+
+            /**
+             * Display forms with error message and content.
+             */
+
+            View::renderTemplate('Packages/editPackage.html', [
+                'id' => $id,
+                'userid' => $userid,
+                'bookid' => $bookid,
+                'datecreated' => $datecreated,
+                'dateend' => $dateend,
+                'description' => $description,
+                'status' => $status,
+                'errors' => $this->getErrors()
+            ]);
+            return;
+
+
+        } else {
+
+            /**
+             * Its not PACKAGE and we render form with existing content
+             */
+
+            $reservationServices = new ReservationServices();
+            $reservation = $reservationServices->readOne($id);
+
+            $id = $reservation->getId();
+            $userid = $reservation->getUserid();
+            $bookid = $reservation->getBookid();
+            $datecreated = $reservation->getDatecreated();
+            $dateend = $reservation->getDateend();
+            $description = $reservation->getDescription();
+            $status = $reservation->getStatus();
+
+
+            View::renderTemplate('Reservations/editReservation.html', [
+                'id' => $id,
+                'userid' => $userid,
+                'bookid' => $bookid,
+                'duration' => $datecreated,
+                'dateend' => $dateend,
+                'description' => $description,
+                'status' => $status
+            ]);
+        }
+
+    }
+
+    /**
+     * Delete action
+     */
+
+    public function deleteAction()
+    {
+
+        /* Take id from route */
+
+        $id = $this->getRouteParams("id");
+
+
+        /**
+         * Check is it post - delete post
+         */
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            try {
+
+                $reservationServices = new ReservationServices();
+                $reservation = $reservationServices->delete($id);
+
+                /* Redirect to index/All posts page */
+
+                header('Location: /reservations/index');
+
+
+            } catch (PDOException $e) {
+                $this->addError($e->getMessage());
+            }
+        }
+
     }
 
     

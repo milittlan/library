@@ -5,12 +5,30 @@ namespace App\Models\Entity;
 
 class Reservation extends \App\Models\ReservationServices {
 
+    private $id;
     private $userid;
     private $bookid;
-    private $startdate;
-    private $enddate;
+    private $datecreated;
+    private $dateend;
     private $description;
     private $status;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $userid
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
 
     /**
      * @return mixed
@@ -47,33 +65,33 @@ class Reservation extends \App\Models\ReservationServices {
     /**
      * @return mixed
      */
-    public function getStartdate()
+    public function getDatecreated()
     {
-        return $this->startdate;
+        return $this->datecreated;
     }
 
     /**
-     * @param mixed $startdate
+     * @param mixed $datecreated
      */
-    public function setStartdate($startdate): void
+    public function setDatecreated($datecreated): void
     {
-        $this->startdate = $startdate;
+        $this->datecreated = $datecreated;
     }
 
     /**
      * @return mixed
      */
-    public function getEnddate()
+    public function getDateend()
     {
-        return $this->enddate;
+        return $this->dateend;
     }
 
     /**
-     * @param mixed $enddate
+     * @param mixed $dateend
      */
-    public function setEnddate($enddate): void
+    public function setDateend($dateend): void
     {
-        $this->enddate = $enddate;
+        $this->dateend = $dateend;
     }
 
     /**
@@ -107,5 +125,6 @@ class Reservation extends \App\Models\ReservationServices {
     {
         $this->status = $status;
     }
+
 
 }

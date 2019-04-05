@@ -59,6 +59,7 @@ class BookService extends \Core\Model {
            /* Return array of entities */
            return $books;
 
+
        } catch (PDOException $e) {
            echo $e->getMessage();
        }

@@ -42,8 +42,8 @@
 
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <select class="form-control show-tick" name="roleid">
-                                <option value="">--Korisnik --</option>
+                            <select class="form-control show-tick" name="userid">
+                                <option  value="{{ reservation.userid }}">--{{ reservation.userid }} --</option>
 
                                 {% for user in users %}
                                 <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>
@@ -55,7 +55,7 @@
 
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <select class="form-control show-tick" name="roleid">
+                            <select class="form-control show-tick" name="bookid">
                                 <option value="">--Knjiga --</option>
 
                                 {% for book in books %}
@@ -69,11 +69,11 @@
                     <h2 class="card-inside-title">Range</h2>
                     <div class="input-daterange input-group" id="bs_datepicker_range_container">
                         <div class="form-line">
-                            <input type="text" class="form-control" placeholder="Date start...">
+                            <input type="text" class="form-control" placeholder="Date start..." name="datecreated">
                         </div>
                         <span class="input-group-addon">to</span>
                         <div class="form-line">
-                            <input type="text" class="form-control" placeholder="Date end...">
+                            <input type="text" class="form-control" placeholder="Date end..." name="dateend">
                         </div>
                     </div>
 
@@ -88,8 +88,11 @@
 
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="text" class="form-control" name="status" required value="{{ status }}">
-                            <label class="form-label">Status</label>
+                            <select class="form-control show-tick" name="status" value="{{ status}}">
+                                <option value="">-- Status --</option>
+                                <option value="1">Active</option>
+                                <option value="0">Disabled</option>
+                            </select>
                         </div>
                     </div>
 

@@ -33,10 +33,11 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Role ID</th>
+                            <th>User</th>
+                            <th>Book</th>
+                            <th>Date created</th>
+                            <th>Date end</th>
+                            <th>Description</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -44,16 +45,17 @@
 
                     <tbody>
 
-                    {% for user in users %}
+                    {% for reservation in reservations %}
 
                     <tr>
-                        <td>{{ user.id }}</td>
-                        <td>{{ user.firstname }}</td>
-                        <td>{{ user.lastname }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.role }}</td>
-                        <td>{{ user.status }}</td>
-                        <td><a href="/users/edit/{{ user.id }}">Edit</a></td>
+                        <td>{{ reservation.id }}</td>
+                        <td>{{ reservation.userid }}</td>
+                        <td>{{ reservation.bookid }}</td>
+                        <td>{{ reservation.datecreated }}</td>
+                        <td>{{ reservation.dateend }}</td>
+                        <td>{{ reservation.description }}</td>
+                        <td>{{ reservation.status }}</td>
+                        <td><a href="/reservations/edit/{{ reservation.id }}">Edit</a></td>
                     </tr>
                     {% endfor %}
 

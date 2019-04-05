@@ -25,12 +25,16 @@ class BooksController extends \Core\Controller  {
         $bookServices = new BookService();
         $books = $bookServices->readAll();
 
+        $BookscategoryServices = new BookscategoryService();
+        $categories = $BookscategoryServices->readOne(29);
+
         /**
          * Render template for all books
          */
 
         View::renderTemplate('Books/index.html', [
-            'books' => $books
+            'books' => $books,
+            'categories' => $categories
         ]);
     }
 
