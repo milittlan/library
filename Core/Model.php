@@ -43,7 +43,10 @@ abstract class Model {
                 return $db;
 
         }
-
+        /**
+         * Milan rewrite - IF $db return PDO we proced that vaule.
+         */
+        return $db;
 
     }
 }

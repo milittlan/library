@@ -83,6 +83,7 @@ class BookscategoryService extends \Core\Model {
          * Query - Select all categories from database
          */
 
+
         $stmt = $db->prepare("SELECT * FROM books_category WHERE id = :id LIMIT 1");
         $stmt->execute(["id"=>$id]);
 
@@ -111,50 +112,6 @@ class BookscategoryService extends \Core\Model {
         /* Return Entity */
 
         return $category;
-
-    }
-
-    public function readAllCategories()
-    {
-        /* DB connection */
-        $db = static::getDB();
-
-
-        /*
-         * Query - Select all categories from database
-         */
-
-        $stmt = $db->query('SELECT id, parent_id, level, name, alias FROM books_category ORDER BY id');
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-        /* Create empty array for entites */
-        $categories = [];
-
-
-        /**
-         * Check all categories - take value from array and put data array into Entity
-         */
-
-        foreach($results as $item) {
-
-
-            $name = $item['name'];
-            $id = $item['id'];
-
-            $category = new Category();
-
-            $category->setName($name);
-            $category->setId($id);
-
-
-            /* add entity to array */
-            array_push($categories,  $category);
-        }
-
-
-        /* Return array of entities */
-        return $categories;
 
     }
 

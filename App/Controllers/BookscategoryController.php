@@ -48,7 +48,7 @@ class BookscategoryController extends \Core\Controller {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $parent_id = $_POST['parent_id'];
+            $parent_id = $_POST['parentid'];
             $level = $_POST['level'];
             $name   = $_POST['name'];
             $alias = $_POST['alias'];
@@ -101,7 +101,7 @@ class BookscategoryController extends \Core\Controller {
              */
 
             View::renderTemplate('Bookscategory/addCategory.html', [
-                'parent_id' => $parent_id,
+                'parentid' => $parent_id,
                 'name' => $name,
                 'alias' => $alias,
                 'level' => $level,
@@ -139,7 +139,7 @@ class BookscategoryController extends \Core\Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $id = $_POST['id'];
-            $parent_id = $_POST['parent_id'];
+            $parent_id = $_POST['parentid'];
             $level = $_POST['level'];
             $name = $_POST['name'];
             $alias = $_POST['alias'];
@@ -184,7 +184,7 @@ class BookscategoryController extends \Core\Controller {
 
             View::renderTemplate('Posts/editPost.html', [
                 'id' => $id,
-                'parent_id' => $parent_id,
+                'parentid' => $parent_id,
                 'level' => $level,
                 'name' => $name,
                 'alias' => $alias,
@@ -210,7 +210,7 @@ class BookscategoryController extends \Core\Controller {
 
             View::renderTemplate('Bookscategory/editCategory.html', [
                 'id' => $id,
-                'parent_id' => $parent_id,
+                'parentid' => $parent_id,
                 'level' => $level,
                 'name' => $name,
                 'alias' => $alias

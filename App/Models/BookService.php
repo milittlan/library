@@ -7,6 +7,8 @@ use App\Models\Entity\Book;
 
 /**
  * Book model
+ * Controle ->Service
+ * Service Book -> Service Category Book
  */
 class BookService extends \Core\Model {
 
@@ -17,6 +19,8 @@ class BookService extends \Core\Model {
      */
     public static function readAll()
     {
+
+
 
         try {
             $db = static::getDB();
@@ -34,23 +38,18 @@ class BookService extends \Core\Model {
 
             foreach($results as $item) {
 
-                $id = $item['id'];
-                $title = $item['title'];
-                $alias = $item['alias'];
-                $author = $item['author'];
-                $publisher = $item['publisher'];
-                $category_id = $item['category_id'];
-                $status = $item['status'];
+                $BookscategoryServices = new BookscategoryService();
 
                 $book = new Book();
 
-                $book->setId($id);
-                $book->setTitle($title);
-                $book->setAlias($alias);
-                $book->setAuthor($author);
-                $book->setPublisher($publisher);
-                $book->setCategory($category_id);
-                $book->setStatus($status);
+                $book->setId($item['id']);
+                $book->setTitle($item['title']);
+                $book->setAlias($item['alias']);
+                $book->setAuthor($item['author']);
+                $book->setPublisher($item['publisher']);
+                $bookCategory = $BookscategoryServices->readOne($item['category_id']);
+                $book->setCategory($bookCategory->getName());
+                $book->setStatus($item['status']);
 
                 /* add entity to array */
                 array_push($books,  $book);
