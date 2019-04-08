@@ -93,23 +93,18 @@ class BookService extends \Core\Model {
          * Take value from array and put data array into Entity
          */
 
-        $id = $results['id'];
-        $title = $results['title'];
-        $alias = $results['alias'];
-        $author = $results['author'];
-        $publisher = $results['publisher'];
-        $category_id = $results['category_id'];
-        $status = $results['status'];
+        $BookscategoryServices = new BookscategoryService();
 
         $book = new Book();
 
-        $book->setId($id);
-        $book->setTitle($title);
-        $book->setAlias($alias);
-        $book->setAuthor($author);
-        $book->setPublisher($publisher);
-        $book->setCategory($category_id);
-        $book->setStatus($status);
+        $book->setId($results['id']);
+        $book->setTitle($results['title']);
+        $book->setAlias($results['alias']);
+        $book->setAuthor($results['author']);
+        $book->setPublisher($results['publisher']);
+        $bookCategory = $BookscategoryServices->readOne($results['category_id']);
+        $book->setCategory($bookCategory->getName());
+        $book->setStatus($results['status']);
 
 
         /* Return Entity */

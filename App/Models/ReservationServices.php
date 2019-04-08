@@ -97,23 +97,15 @@ class ReservationServices extends \Core\Model   {
          * Take value from array and put data array into Entity
          */
 
-        $id = $results['id'];
-        $userid = $results['user_id'];
-        $bookid = $results['book_id'];
-        $datecreated = $results['date_created'];
-        $dateend = $results['date_end'];
-        $description = $results['description'];
-        $status = $results['status'];
-
         $reservation = new Reservation();
 
-        $reservation->setId($id);
-        $reservation->setUserid($userid);
-        $reservation->setBookid($bookid);
-        $reservation->setDatecreated($datecreated);
-        $reservation->setDateend($dateend);
-        $reservation->setDescription($description);
-        $reservation->setStatus($status);
+        $reservation->setId($results['id']);
+        $reservation->setUserid($results['user_id']);
+        $reservation->setBookid($results['book_id']);
+        $reservation->setDatecreated($results['date_created']);
+        $reservation->setDateend($results['date_end']);
+        $reservation->setDescription($results['description']);
+        $reservation->setStatus($results['status']);
 
 
         /* Return Entity */

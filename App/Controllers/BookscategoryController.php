@@ -116,7 +116,7 @@ class BookscategoryController extends \Core\Controller {
          */
 
         $BookscategoryServices = new BookscategoryService();
-        $categories = $BookscategoryServices->readAllCategories();
+        $categories = $BookscategoryServices->readAll();
 
         View::renderTemplate('Bookscategory/addCategory.html', [
             'categories' => $categories

@@ -40,19 +40,13 @@ class BookscategoryService extends \Core\Model {
 
         foreach($results as $item) {
 
-            $id = $item['id'];
-            $parent_id = $item['parent_id'];
-            $level = $item['level'];
-            $name = $item['name'];
-            $alias = $item['alias'];
-
             $category = new Category();
 
-            $category->setId($id);
-            $category->setParentId($parent_id);
-            $category->setLevel($level);
-            $category->setName($name);
-            $category->setAlias($alias);
+            $category->setId($item['id']);
+            $category->setParentId($item['parent_id']);
+            $category->setLevel($item['level']);
+            $category->setName($item['name']);
+            $category->setAlias($item['alias']);
 
             /* add entity to array */
             array_push($categories,  $category);
@@ -94,19 +88,13 @@ class BookscategoryService extends \Core\Model {
          * Take value from array and put data array into Entity
          */
 
-        $id = $results['id'];
-        $parent_id = $results['parent_id'];
-        $level = $results['level'];
-        $name = $results['name'];
-        $alias = $results['alias'];
-
         $category = new Category();
 
-        $category->setId($id);
-        $category->setParentId($parent_id);
-        $category->setLevel($level);
-        $category->setName($name);
-        $category->setAlias($alias);
+        $category->setId($results['id']);
+        $category->setParentId($results['parent_id']);
+        $category->setLevel($results['level']);
+        $category->setName($results['name']);
+        $category->setAlias($results['alias']);
 
 
         /* Return Entity */

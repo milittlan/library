@@ -40,17 +40,12 @@ class PackageService extends \Core\Model   {
 
         foreach($results as $item) {
 
-            $id = $item['id'];
-            $name = $item['name'];
-            $value = $item['value'];
-            $duration = $item['duration'];
-
             $package = new Package();
 
-            $package->setId($id);
-            $package->setName($name);
-            $package->setValue($value);
-            $package->setDuration($duration);
+            $package->setId($item['id']);
+            $package->setName($item['name']);
+            $package->setValue($item['value']);
+            $package->setDuration($item['duration']);
 
 
             /* add entity to array */
@@ -90,22 +85,16 @@ class PackageService extends \Core\Model   {
          * Take value from array and put data array into Entity
          */
 
-        $id = $results['id'];
-        $name = $results['name'];
-        $value = $results['value'];
-        $duration = $results['duration'];
-
         $package = new Package();
 
-        $package->setId($id);
-        $package->setName($name);
-        $package->setValue($value);
-        $package->setDuration($duration);
+        $package->setId($results['id']);
+        $package->setName($results['name']);
+        $package->setValue($results['value']);
+        $package->setDuration($results['duration']);
 
         /* Return Entity */
 
         return $package;
-
 
     }
 

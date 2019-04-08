@@ -40,15 +40,11 @@ class PostService extends \Core\Model   {
 
         foreach($results as $item) {
 
-            $id = $item['id'];
-            $title = $item['title'];
-            $content = $item['content'];
-
             $post = new Post();
 
-            $post->setId($id);
-            $post->setContent($content);
-            $post->setTitle($title);
+            $post->setId($item['id']);
+            $post->setContent($item['title']);
+            $post->setTitle($item['content']);
 
             /* add entity to array */
             array_push($posts,  $post);
@@ -88,21 +84,16 @@ class PostService extends \Core\Model   {
          * Take value from array and put data array into Entity
          */
 
-        $id = $results['id'];
-        $title = $results['title'];
-        $content = $results['content'];
-
         $post = new Post();
 
-        $post->setId($id);
-        $post->setContent($content);
-        $post->setTitle($title);
+        $post->setId($results['id']);
+        $post->setContent($results['title']);
+        $post->setTitle($results['content']);
 
 
         /* Return Entity */
 
         return $post;
-
 
     }
 

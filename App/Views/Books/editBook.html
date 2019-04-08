@@ -65,8 +65,8 @@
 
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <select class="form-control show-tick" name="categoryid">
-                                <option value="">{{ category_id }}</option>
+                            <select class="form-control show-tick" name="category_id">
+                                <option value="{{category_id}}">{{ category_id }}</option>
 
                                 {% for category in categories %}
                                 <option value="{{ category.id }}">{{ category.name }}</option>

@@ -40,15 +40,11 @@ class RoleService extends \Core\Model   {
 
         foreach($results as $item) {
 
-            $id = $item['id'];
-            $name = $item['name'];
-            $description = $item['description'];
-
             $role = new Role();
 
-            $role->setId($id);
-            $role->setName($name);
-            $role->setDescription($description);
+            $role->setId($item['id']);
+            $role->setName($item['name']);
+            $role->setDescription($item['description']);
 
             /* add entity to array */
             array_push($roles,  $role);
@@ -88,21 +84,16 @@ class RoleService extends \Core\Model   {
          * Take value from array and put data array into Entity
          */
 
-        $id = $results['id'];
-        $name = $results['name'];
-        $description = $results['description'];
-
         $role = new Role();
 
-        $role->setId($id);
-        $role->setName($name);
-        $role->setDescription($description);
+        $role->setId($results['id']);
+        $role->setName($results['name']);
+        $role->setDescription($results['description']);
 
 
         /* Return Entity */
 
         return $role;
-
 
     }
 

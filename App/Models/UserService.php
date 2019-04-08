@@ -203,7 +203,7 @@ class UserService extends \Core\Model   {
         $user->setLastname($lastname);
         $user->setEmail($email);
         $user->setPassword($password);
-        $user->setRoleId($role);
+        $user->setRole($role);
         $user->setStatus($status);
 
 
@@ -216,7 +216,7 @@ class UserService extends \Core\Model   {
          * Query - Update posts
          */
 
-        $stmt = $db->prepare("UPDATE roles SET name = :name, description = :description WHERE id = :id");
+        $stmt = $db->prepare("UPDATE user SET id = :id, firstname = :firstname, lastname = :lastname, email = :email, password = :password, role_id = :role_id, status = :status WHERE id = :id");
 
         $id = $user->getId();
         $firstname = $user->getFirstname();

@@ -143,6 +143,7 @@ class UsersController extends \Core\Controller
             $firstname   = $_POST['firstname'];
             $lastname = $_POST['lastname'];
             $email = $_POST['email'];
+            $password = $_POST['password'];
             $roleid = $_POST['roleid'];
             $status = $_POST['status'];
 
@@ -191,7 +192,7 @@ class UsersController extends \Core\Controller
                 'lastname' => $lastname,
                 'email' => $email,
                 'password' => $password,
-                'role_id' => $role_id,
+                'roleid' => $roleid,
                 'status' => $status,
                 'errors' => $this->getErrors()
             ]);
