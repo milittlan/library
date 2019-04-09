@@ -40,24 +40,15 @@ class ReservationServices extends \Core\Model   {
 
         foreach($results as $item) {
 
-            $id = $item['id'];
-            $userid = $item['user_id'];
-            $bookid = $item['book_id'];
-            $datecreated = $item['date_created'];
-            $dateend = $item ['date_end'];
-            $description = $item ['description'];
-            $status = $item['status'];
-
-
             $reservation = new Reservation();
 
-            $reservation->setId($id);
-            $reservation->setUserid($userid);
-            $reservation->setBookid($bookid);
-            $reservation->setDatecreated($datecreated);
-            $reservation->setDateend($dateend);
-            $reservation->setDescription($description);
-            $reservation->setStatus($status);
+            $reservation->setId($item['id']);
+            $reservation->setUserid($item['user_id']);
+            $reservation->setBookid($item['book_id']);
+            $reservation->setDatecreated($item['date_created']);
+            $reservation->setDateend($item ['date_end']);
+            $reservation->setDescription($item ['description']);
+            $reservation->setStatus($item['status']);
 
             /* add entity to array */
             array_push($reservations,  $reservation);

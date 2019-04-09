@@ -38,6 +38,8 @@
                             <select class="form-control show-tick" name="parentid">
                                 <option value="">-- Parent --</option>
 
+                                <option value="0">None</option>
+
                                 {% for category in categories %}
                                     <option value="{{ category.id }}">{{ category.name }}</option>
                                 {% endfor %}
@@ -49,11 +51,11 @@
                         <div class="form-line">
                             <select class="form-control show-tick" name="level">
                                 <option value="">-- level --</option>
-                                <option value="10">1</option>
-                                <option value="20">2</option>
-                                <option value="30">3</option>
-                                <option value="40">4</option>
-                                <option value="50">5</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
                             </select>
                         </div>
                     </div>

@@ -10,7 +10,6 @@ use App\Models\Entity\Category;
  */
 class BookscategoryService extends \Core\Model {
 
-
     /**
      * Get all the categories as an array (array of Entities)
      *
@@ -18,14 +17,13 @@ class BookscategoryService extends \Core\Model {
      */
     public function readAll()
     {
+
         /* DB connection */
         $db = static::getDB();
-
 
         /*
          * Query - Select all categories from database
          */
-
         $stmt = $db->query('SELECT id, parent_id, level, name, alias FROM books_category ORDER BY id');
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -37,16 +35,28 @@ class BookscategoryService extends \Core\Model {
         /**
          * Check all categories - take value from array and put data array into Entity
          */
-
         foreach($results as $item) {
 
             $category = new Category();
 
             $category->setId($item['id']);
-            $category->setParentId($item['parent_id']);
+
             $category->setLevel($item['level']);
             $category->setName($item['name']);
             $category->setAlias($item['alias']);
+
+            /**
+             * Get parent category NAME
+             */
+
+            $parentcategory = $this->readOne($item['parent_id']);
+            if ($item['parent_id'] == 0) {
+                $category->setParentId('none');
+            } else {
+                $category->setParentId($parentcategory->getName());
+            }
+
+
 
             /* add entity to array */
             array_push($categories,  $category);
@@ -69,15 +79,12 @@ class BookscategoryService extends \Core\Model {
         /**
          * DB connection
          */
-
         $db = static::getDB();
 
 
         /*
          * Query - Select all categories from database
          */
-
-
         $stmt = $db->prepare("SELECT * FROM books_category WHERE id = :id LIMIT 1");
         $stmt->execute(["id"=>$id]);
 
@@ -87,7 +94,6 @@ class BookscategoryService extends \Core\Model {
         /**
          * Take value from array and put data array into Entity
          */
-
         $category = new Category();
 
         $category->setId($results['id']);
@@ -98,7 +104,6 @@ class BookscategoryService extends \Core\Model {
 
 
         /* Return Entity */
-
         return $category;
 
     }
@@ -156,7 +161,6 @@ class BookscategoryService extends \Core\Model {
         } else {
             return false;
         }
-
 
     }
 

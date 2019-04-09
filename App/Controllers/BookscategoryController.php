@@ -84,8 +84,8 @@ class BookscategoryController extends \Core\Controller {
                     $category = $BookscategoryServices->create($parent_id, $level, $name, $alias);
 
 
-                    /* Redirect to index/All categories page */
-                    header('Location: addNew');
+                    /* Redirect to index/All categories page  */
+                    header('Location: /bookscategory/index');
 
 
                 }  catch (\PDOException $e) {
@@ -132,6 +132,7 @@ class BookscategoryController extends \Core\Controller {
 
         $id = $this->getRouteParams('id');
 
+
         /**
          * Checking is it POST - Take new content - Validate data - Update action
          */
@@ -166,9 +167,7 @@ class BookscategoryController extends \Core\Controller {
 
                     $category = $BookscategoryServices->update($id, $parent_id, $level, $name, $alias);
 
-                    /**
-                     * Redirect to index/All categories page
-                     */
+                    /* Redirect to index/All categories page  */
                     header('Location: /bookscategory/index');
 
 
@@ -202,17 +201,25 @@ class BookscategoryController extends \Core\Controller {
             $BookscategoryServices = new BookscategoryService();
             $category = $BookscategoryServices->readOne($id);
 
+            $categories = $BookscategoryServices->readAll();
+
             $id = $category->getId();
             $parent_id = $category->getParentId();
             $level = $category->getLevel();
             $name = $category->getName();
             $alias = $category->getAlias();
 
+            /* Get parent category data */
+            $parentcategory = $BookscategoryServices->readOne($parent_id);
+
+
             View::renderTemplate('Bookscategory/editCategory.html', [
                 'id' => $id,
                 'parentid' => $parent_id,
                 'level' => $level,
                 'name' => $name,
+                'categories' => $categories,
+                'parentcategory' => $parentcategory,
                 'alias' => $alias
             ]);
         }

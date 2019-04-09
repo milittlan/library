@@ -95,21 +95,14 @@ class UserService extends \Core\Model   {
          * Take value from array and put data array into Entity
          */
 
-        $id = $results['id'];
-        $firstname = $results['firstname'];
-        $lastname = $results['lastname'];
-        $email = $results['email'];
-        $role = $results['role_id'];
-        $status = $results['status'];
-
         $user = new User();
 
-        $user->setId($id);
-        $user->setFirstname($firstname);
-        $user->setLastname($lastname);
-        $user->setEmail($email);
-        $user->setRole($role);
-        $user->setStatus($status);
+        $user->setId($results['id']);
+        $user->setFirstname($results['firstname']);
+        $user->setLastname($results['lastname']);
+        $user->setEmail($results['email']);
+        $user->setRole($results['role_id']);
+        $user->setStatus($results['status']);
 
 
         /* Return Entity */
