@@ -56,6 +56,7 @@ class UsersController extends \Core\Controller
             $firstname   = $_POST['firstname'];
             $lastname = $_POST['lastname'];
             $email = $_POST['email'];
+            $password = $_POST['password'];
             $roleid = $_POST['roleid'];
             $status = $_POST['status'];
 
@@ -80,7 +81,7 @@ class UsersController extends \Core\Controller
 
                     $userServics = new UserService();
 
-                    $user = $userServics->create($firstname, $lastname, $email, $roleid, $status);
+                    $user = $userServics->create($firstname, $lastname, $email, $password, $roleid, $status);
 
 
                     /* Redirect to index/All posts page */
@@ -104,6 +105,7 @@ class UsersController extends \Core\Controller
                 'lastname' => $lastname,
                 'email' => $email,
                 'roleid' => $roleid,
+                'password' => $password,
                 'status' => $status,
                 'errors' => $this->getErrors()
             ]);

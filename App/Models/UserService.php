@@ -40,22 +40,20 @@ class UserService extends \Core\Model   {
 
         foreach($results as $item) {
 
-            $id = $item['id'];
-            $firstname = $item['firstname'];
-            $lastname = $item['lastname'];
-            $email = $item['email'];
-            $role = $item['role_id'];
-            $status = $item['status'];
+            $RoleService = new RoleService();
 
 
             $user = new User();
 
-            $user->setId($id);
-            $user->setFirstname($firstname);
-            $user->setLastname($lastname);
-            $user->setEmail($email);
-            $user->setRole($role);
-            $user->setStatus($status);
+            $user->setId($item['id']);
+            $user->setFirstname( $item['firstname']);
+            $user->setLastname( $item['lastname']);
+            $user->setEmail($item['email']);
+            $user->setRole($item['role_id']);
+            $user->setStatus($item['status']);
+
+            $userRole = $RoleService->readOne($item['role_id']);
+            $user->setRole($userRole->getName());
 
             /* add entity to array */
             array_push($users,  $user);
@@ -95,13 +93,17 @@ class UserService extends \Core\Model   {
          * Take value from array and put data array into Entity
          */
 
+        $Roleservices = new RoleService();
         $user = new User();
 
         $user->setId($results['id']);
         $user->setFirstname($results['firstname']);
         $user->setLastname($results['lastname']);
         $user->setEmail($results['email']);
-        $user->setRole($results['role_id']);
+
+        $userRole = $Roleservices->readOne($results['role_id']);
+        $user->setRole($userRole->getName());
+
         $user->setStatus($results['status']);
 
 
@@ -130,7 +132,7 @@ class UserService extends \Core\Model   {
         $user->setLastname($lastname);
         $user->setEmail($email);
         $user->setPassword($password);
-        $user->setRoleid($role);
+        $user->setRole($role);
         $user->setStatus($status);
 
 
