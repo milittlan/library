@@ -3,11 +3,11 @@
 namespace App\Models\Entity;
 
 
-class MOdule extends \App\Models\ModuleService {
+class Permission extends \App\Models\ModuleService {
 
     private $id;
-    private $permission;
-    private $moduleid;
+    private $name;
+    private $module;
 
     /**
      * @return mixed
@@ -28,33 +28,33 @@ class MOdule extends \App\Models\ModuleService {
     /**
      * @return mixed
      */
-    public function getPermission()
+    public function getName()
     {
-        return $this->permission;
+        return $this->name;
     }
 
     /**
-     * @param mixed $permission
+     * @param mixed $name
      */
-    public function setPermission($permission): void
+    public function setName($name): void
     {
-        $this->permission = $permission;
+        $this->name = $name;
     }
 
     /**
      * @return mixed
      */
-    public function getModuleid()
+    public function getModule()
     {
-        return $this->moduleid;
+        return $this->module;
     }
 
     /**
-     * @param mixed $moduleid
+     * @param mixed $module
      */
-    public function setModuleid($moduleid): void
+    public function setModule($module): void
     {
-        $this->moduleid = $moduleid;
+        $this->module = $module;
     }
 
 
