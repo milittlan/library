@@ -7,6 +7,7 @@ class MOdule extends \App\Models\ModuleService {
 
     private $id;
     private $name;
+    private $machinename;
 
     /**
      * @return mixed
@@ -39,6 +40,24 @@ class MOdule extends \App\Models\ModuleService {
     {
         $this->name = $name;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMachinename()
+    {
+        return $this->machinename;
+    }
+
+    /**
+     * @param mixed $machinename
+     */
+    public function setMachinename($machinename): void
+    {
+        $this->machinename = $machinename;
+    }
+
+
 
 
 }

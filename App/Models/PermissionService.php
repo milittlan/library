@@ -41,11 +41,16 @@ class PermissionService extends \Core\Model   {
 
         foreach($results as $item) {
 
+            $moduleServices = new ModuleService();
+
             $permission = new Permission();
 
             $permission->setId($item['id']);
             $permission->setName($item['permission']);
             $permission->setModule($item['module_id']);
+
+            $moduleServices = $moduleServices->readOne($item['module_id']);
+            $permission->setModule($moduleServices->getName());
 
             /* add entity to array */
             array_push($permissions,  $permission);
@@ -85,16 +90,15 @@ class PermissionService extends \Core\Model   {
          * Take value from array and put data array into Entity
          */
 
-        $modules = new ModuleService();
+        $moduleServices = new ModuleService();
 
         $permission = new Permission();
 
         $permission->setId($results['id']);
         $permission->setName($results['permission']);
-        $permission->setModule($results['module_id']);
 
-        $module = $modules->readOne($results['module_id']);
-        $permission->setModule($module->getName());
+        $moduleName = $moduleServices->readOne($results['module_id']);
+        $permission->setModule($moduleName->getName());
 
 
 
@@ -133,7 +137,7 @@ class PermissionService extends \Core\Model   {
          * Query - Select all books from database
          */
 
-        $stmt = $db->prepare("INSERT INTO permissions (permission, module_id) VALUES (:name, :module)");
+        $stmt = $db->prepare("INSERT INTO permissions (permission, module_id) VALUES (:name, :module_id)");
 
 
         $name = $permission->getName();
@@ -142,7 +146,7 @@ class PermissionService extends \Core\Model   {
 
 
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-        $stmt->bindParam(':module', $module, PDO::PARAM_STR);
+        $stmt->bindParam(':module_id', $module, PDO::PARAM_STR);
 
 
         $results = $stmt->execute();
@@ -159,6 +163,12 @@ class PermissionService extends \Core\Model   {
 
     }
 
+    /**
+     * @param $id
+     * @param $name
+     * @param $module
+     * @return bool
+     */
     public function update ($id, $name, $module)
     {
 
@@ -182,7 +192,7 @@ class PermissionService extends \Core\Model   {
          * Query - Update book
          */
 
-        $stmt = $db->prepare("UPDATE permissions SET permission = :name, module_id = :module WHERE id = :id");
+        $stmt = $db->prepare("UPDATE permissions SET permission = :name, module_id = :module_id WHERE id = :id");
 
         $id = $permission->getId();
         $name = $permission->getName();
@@ -191,8 +201,48 @@ class PermissionService extends \Core\Model   {
 
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-        $stmt->bindParam(':module', $module, PDO::PARAM_STR);
+        $stmt->bindParam(':module_id', $module, PDO::PARAM_STR);
 
+        $results = $stmt->execute();
+
+        /**
+         * Return boolean
+         */
+
+        if ($results == true) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     *
+     */
+    public function delete($id)
+    {
+
+        $permission = new Permission();
+
+        $permission->setId($id);
+
+        /* DB connection */
+
+        $db = static::getDB();
+
+
+        /*
+        * Query - Delete book
+        */
+
+        $stmt = $db->prepare("DELETE FROM permissions WHERE id = :id");
+
+        $id = $permission->getId();
+
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
 
         $results = $stmt->execute();
 
@@ -208,4 +258,5 @@ class PermissionService extends \Core\Model   {
         }
 
     }
+
 }

@@ -26,7 +26,7 @@ class ModuleService extends \Core\Model   {
          * Query - Select all modules from database
          */
 
-        $stmt = $db->query('SELECT id, name FROM module ORDER BY id');
+        $stmt = $db->query('SELECT id, name, machine_name FROM module ORDER BY id');
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
@@ -44,6 +44,7 @@ class ModuleService extends \Core\Model   {
 
             $module->setId($item['id']);
             $module->setName($item['name']);
+            $module->setMachinename($item['machine_name']);
 
             /* add entity to array */
             array_push($modules,  $module);
@@ -87,6 +88,7 @@ class ModuleService extends \Core\Model   {
 
         $module->setId($results['id']);
         $module->setName($results['name']);
+        $module->setMachinename($results['machine_name']);
 
 
 
@@ -101,12 +103,13 @@ class ModuleService extends \Core\Model   {
      * @param $content
      * @return mixed
      */
-    public function create($name)
+    public function create($name, $machinename)
     {
 
         $module = new Module();
 
         $module->setName($name);
+        $module->setMachinename($machinename);
 
         /**
          * DB connection
@@ -119,12 +122,14 @@ class ModuleService extends \Core\Model   {
          * Query - Insert post into database
          */
 
-        $stmt = $db->prepare("INSERT INTO module (name) VALUES (:name)");
+        $stmt = $db->prepare("INSERT INTO module (name, machine_name) VALUES (:name, :machinename)");
 
         $name = $module->getName();
+        $machinename = $module->getMachinename();
 
 
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':machinename', $machinename, PDO::PARAM_STR);
 
         $results = $stmt->execute();
 
@@ -148,7 +153,7 @@ class ModuleService extends \Core\Model   {
      * @param $content
      * @return bool
      */
-    public function update($id, $name)
+    public function update($id, $name, $machinename)
     {
         /**
          * Take existing value from post
@@ -158,6 +163,7 @@ class ModuleService extends \Core\Model   {
 
         $module->setId($id);
         $module->setName($name);
+        $module->setMachinename($machinename);
 
         /* DB connection */
 
@@ -168,13 +174,15 @@ class ModuleService extends \Core\Model   {
          * Query - Update posts
          */
 
-        $stmt = $db->prepare("UPDATE module SET name = :name WHERE id = :id");
+        $stmt = $db->prepare("UPDATE module SET name = :name, machine_name = :machinename WHERE id = :id");
 
         $id = $module->getId();
         $name = $module->getName();
+        $machinename = $module->getMachinename();
 
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':machinename', $machinename, PDO::PARAM_STR);
 
         $results = $stmt->execute();
 

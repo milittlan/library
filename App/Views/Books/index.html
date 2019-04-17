@@ -53,7 +53,18 @@
                         <td>{{ book.author }}</td>
                         <td>{{ book.publisher }}</td>
                         <td>{{ book.category }}</td>
-                        <td>{{ book.status }}</td>
+                        <td>
+                            {% if book.status > 0 %}
+
+                                Free
+
+                            {% else %}
+
+                                Rented
+
+                            {% endif %}
+
+                        </td>
                         <td><a href="/books/edit/{{ book.id }}">Edit</a></td>
                     </tr>
                     {% endfor %}

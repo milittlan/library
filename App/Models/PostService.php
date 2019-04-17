@@ -43,8 +43,8 @@ class PostService extends \Core\Model   {
             $post = new Post();
 
             $post->setId($item['id']);
-            $post->setContent($item['title']);
-            $post->setTitle($item['content']);
+            $post->setTitle($item['title']);
+            $post->setContent($item['content']);
 
             /* add entity to array */
             array_push($posts,  $post);
@@ -87,9 +87,8 @@ class PostService extends \Core\Model   {
         $post = new Post();
 
         $post->setId($results['id']);
-        $post->setContent($results['title']);
-        $post->setTitle($results['content']);
-
+        $post->setTitle($results['title']);
+        $post->setContent($results['content']);
 
         /* Return Entity */
 

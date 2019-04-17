@@ -66,10 +66,10 @@
                     <div class="form-group form-float">
                         <div class="form-line">
                             <select class="form-control show-tick" name="category_id">
-                                <option value="{{category_id}}">{{ category_id }}</option>
+                                <option value="{{category_id.id}}">{{ category_id.name }}</option>
 
                                 {% for category in categories %}
-                                <option value="{{ category.id }}">{{ category.name }}</option>
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
                                 {% endfor %}
 
                             </select>
@@ -79,14 +79,20 @@
                     <div class="form-group form-float">
                         <div class="form-line">
                             <select class="form-control show-tick" name="status">
-                                <option value="{{status.id}}">{{ status }}</option>
+
+                                {% if status  > 0 %}
+                                <option value="{{status}}">Free</option>
+                                {% else %}
+                                <option value="{{status}}">Rented</option>
+                                {% endif %}
+
                                 <option value="1">Free</option>
                                 <option value="0">Rented</option>
+
                             </select>
                         </div>
                     </div>
 
-                    <input type="text" name="status" value="{{status}}" hidden>
 
                     <input type="text" name="id" value="{{id}}" hidden>
 

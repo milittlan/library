@@ -239,4 +239,5 @@ class PostsController extends \Core\Controller  {
         }
 
     }
+
 }

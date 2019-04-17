@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Post{% endblock %}
+{% block title %}Reservation{% endblock %}
 
 {% block body %}
 
@@ -8,7 +8,7 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
             <div class="header">
-                <h2>Izmjenite postojeci post</h2>
+                <h2>Reservation</h2>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -38,7 +38,7 @@
                     <div class="form-group form-float">
                         <div class="form-line">
                             <select class="form-control show-tick" name="userid">
-                                <option value="">--Korisnik --</option>
+                                <option value="">-- User --</option>
 
                                 {% for user in users %}
                                 <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>
@@ -51,17 +51,17 @@
                     <div class="form-group form-float">
                         <div class="form-line">
                             <select class="form-control show-tick" name="bookid">
-                                <option value="">--Knjiga --</option>
+                                <option value="">-- Book --</option>
 
                                 {% for book in books %}
-                                <option value="{{ book.id }}">{{ book.title }}</option>
+                                    <option value="{{ book.id }}">{{ book.title }}</option>
                                 {% endfor %}
 
                             </select>
                         </div>
                     </div>
 
-                    <h2 class="card-inside-title">Range</h2>
+                    <h2 class="card-inside-title">DATE Range</h2>
                     <div class="input-daterange input-group" id="bs_datepicker_range_container">
                         <div class="form-line">
                             <input type="text" class="form-control" placeholder="Date start..." name="datecreated">

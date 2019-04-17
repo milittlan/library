@@ -60,11 +60,11 @@ class PermissionsController extends \Core\Controller  {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $name   = $_POST['name'];
-            $module = $_POST['module'];
+            $moduleid = $_POST['moduleid'];
 
             /**
              *
-             * Validate title
+             * Validate name
              * For testing we are checking does fields have exact content.
              *
              */
@@ -84,7 +84,7 @@ class PermissionsController extends \Core\Controller  {
 
                     $permissionServices = new PermissionService();
 
-                    $permission = $permissionServices->create($name, $module);
+                    $permission = $permissionServices->create($name, $moduleid);
 
 
                     /* Redirect to index/All books page */
@@ -105,7 +105,7 @@ class PermissionsController extends \Core\Controller  {
 
             View::renderTemplate('Permissions/addPermission.html', [
                 'name' => $name,
-                'module' => $module,
+                'module' => $moduleid,
                 'errors' => $this->getErrors()
 
             ]);
@@ -143,7 +143,7 @@ class PermissionsController extends \Core\Controller  {
 
             $id = $_POST['id'];
             $name   = $_POST['name'];
-            $module   = $_POST['module'];
+            $module   = $_POST['module_id'];
 
             /**
              * Its post!
@@ -189,7 +189,8 @@ class PermissionsController extends \Core\Controller  {
             View::renderTemplate('Permissions/editPermission.html', [
                 'id' => $id,
                 'name' => $name,
-                'module' => $module,
+                'modules' => $modules,
+                'module_id' => $module,
                 'errors' => $this->getErrors()
             ]);
             return;
@@ -198,7 +199,7 @@ class PermissionsController extends \Core\Controller  {
         } else {
 
             /**
-             * Its not Book and we render form with existing content
+             * Its not Post and we render form with existing content
              */
 
             $permissionServices = new PermissionService();
@@ -212,9 +213,46 @@ class PermissionsController extends \Core\Controller  {
             View::renderTemplate('Permissions/editPermission.html', [
                 'id' => $id,
                 'name' => $name,
-                'module' => $module
+                'modules' => $modules,
+                'module_id' => $module
             ]);
         }
 
     }
+
+    /**
+     * Delete action
+     */
+
+    public function deleteAction()
+    {
+
+        /* Take id from route */
+
+        $id = $this->getRouteParams("id");
+
+
+        /**
+         * Check is it post - delete post
+         */
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            try {
+
+                $permissionServices = new PermissionService();
+                $permission = $permissionServices->delete($id);
+
+                /* Redirect to index/All posts page */
+
+                header('Location: /roles/index');
+
+
+            } catch (PDOException $e) {
+                $this->addError($e->getMessage());
+            }
+        }
+
+    }
+
 }

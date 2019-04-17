@@ -103,7 +103,7 @@ class BookService extends \Core\Model {
         $book->setAuthor($results['author']);
         $book->setPublisher($results['publisher']);
         $bookCategory = $BookscategoryServices->readOne($results['category_id']);
-        $book->setCategory($bookCategory->getName());
+        $book->setCategory($bookCategory);
         $book->setStatus($results['status']);
 
 
@@ -290,4 +290,5 @@ class BookService extends \Core\Model {
         }
 
     }
+
 }

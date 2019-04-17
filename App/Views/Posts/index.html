@@ -31,24 +31,27 @@
                 <table class="table">
 
                     <thead>
+
                         <tr>
                             <th>#</th>
                             <th>Title</th>
                             <th>Content</th>
                             <th>Action</th>
                         </tr>
+
                     </thead>
 
                     <tbody>
 
                     {% for post in posts %}
 
-                    <tr>
-                        <td>{{ post.id }}</td>
-                        <td>{{ post.title }}</td>
-                        <td>{{ post.content }}</td>
-                        <td><a href="/posts/edit/{{ post.id }}">Edit</a></td>
-                    </tr>
+                        <tr>
+                            <td>{{ post.id }}</td>
+                            <td>{{ post.title }}</td>
+                            <td>{{ post.content }}</td>
+                            <td><a href="/posts/edit/{{ post.id }}">Edit</a></td>
+                        </tr>
+
                     {% endfor %}
 
                     </tbody>

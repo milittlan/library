@@ -58,7 +58,7 @@ class BooksController extends \Core\Controller  {
             $alias = $_POST['alias'];
             $author = $_POST['author'];
             $publisher = $_POST['publisher'];
-            $category_id = $_POST['categoryid'];
+            $category_id = $_POST['category_id'];
             $status =  $_POST['status'];
 
             /**
@@ -286,4 +286,5 @@ class BooksController extends \Core\Controller  {
         }
 
     }
+
 }

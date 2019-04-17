@@ -50,16 +50,18 @@ class ModulesController extends \Core\Controller  {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $name   = $_POST['name'];
+            $machinename = $_POST['machinename'];
 
-            /**
-             *
-             * Validate title and content.
-             * For testing we are checking does fields have exact content.
-             *
-             */
-            if ($name == 'aaa') {
-                $error_message = 'Greska - polje NAME ne moze da ima ovaj sadrzaj';
-                $this->addError($error_message);
+
+
+            /**   create machine name without space and lowercase  **/
+
+            if (empty($machinename)) {
+                $machinename = strtolower($machinename);
+                $machinename = preg_replace('/\s+/', '_', $machinename);
+            } else {
+                $machinename = strtolower($machinename);
+                $machinename = preg_replace('/\s+/', '_', $machinename);
             }
 
 
@@ -73,7 +75,7 @@ class ModulesController extends \Core\Controller  {
 
                     $moduleServices = new ModuleService();
 
-                    $module = $moduleServices->create($name);
+                    $module = $moduleServices->create($name, $machinename);
 
 
                     /* Redirect to index/All posts page */
@@ -94,6 +96,7 @@ class ModulesController extends \Core\Controller  {
 
             View::renderTemplate('Modules/addModule.html', [
                 'name' => $name,
+                'machinename' => $machinename,
                 'errors' => $this->getErrors()
             ]);
             return;
@@ -124,15 +127,17 @@ class ModulesController extends \Core\Controller  {
 
             $id   = $_POST['id'];
             $name   = $_POST['name'];
+            $machinename = $_POST['machinename'];
 
-            /**
-             * ITs post!
-             * validation of updated content
-             */
 
-            if ($name == 'aaa') {
-                $error_message = 'Greska - polje NAME ne moze da ima ovaj sadrzaj';
-                $this->addError($error_message);
+            /**   create machine name without space and lowercase  **/
+
+            if (empty($machinename)) {
+                $machinename = strtolower($machinename);
+                $machinename = preg_replace('/\s+/', '_', $machinename);
+            } else {
+                $machinename = strtolower($machinename);
+                $machinename = preg_replace('/\s+/', '_', $machinename);
             }
 
 
@@ -147,7 +152,7 @@ class ModulesController extends \Core\Controller  {
 
                     $moduleServices = new ModuleService();
 
-                    $module = $moduleServices->update($id, $name);
+                    $module = $moduleServices->update($id, $name, $machinename);
 
                     /**
                      * Redirect to index/All posts page
@@ -168,6 +173,7 @@ class ModulesController extends \Core\Controller  {
             View::renderTemplate('Modules/editModule.html', [
                 'id' => $id,
                 'name' => $name,
+                'machinename' => $machinename,
                 'errors' => $this->getErrors()
             ]);
             return;
@@ -184,10 +190,12 @@ class ModulesController extends \Core\Controller  {
 
             $id = $module->getId();
             $name = $module->getName();
+            $machinename = $module->getMachinename();
 
             View::renderTemplate('Modules/editModule.html', [
                 'id' => $id,
-                'name' => $name
+                'name' => $name,
+                'machinename' => $machinename
             ]);
         }
 
