@@ -84,8 +84,25 @@
 
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="text" class="form-control" name="status" required value="{{ status }}">
-                            <label class="form-label">Status</label>
+                            <select class="form-control show-tick" name="packageid">
+
+                                <option value="">-- Package --</option>
+
+                                {% for package in packages %}
+                                    <option value="{{ package.id }}">{{ package.name }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <select class="form-control show-tick" name="status">
+                                <option value="">-- Status --</option>
+                                <option value="1">Active</option>
+                                <option value="0">Disabled</option>
+                            </select>
                         </div>
                     </div>
 

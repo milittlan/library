@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\PackageService;
 use App\Models\UserService;
 use App\Models\RoleService;
 use \Core\View;
@@ -47,6 +48,9 @@ class UsersController extends \Core\Controller
         $roleServices = new RoleService();
         $roles = $roleServices->readAll();
 
+        $packageServices = new PackageService();
+        $packages = $packageServices->readAll();
+
         /**
          * Checking is it post - create post in database - redirect to index
          */
@@ -58,6 +62,7 @@ class UsersController extends \Core\Controller
             $email = $_POST['email'];
             $password = $_POST['password'];
             $roleid = $_POST['roleid'];
+            $packageid = $_POST['packageid'];
             $status = $_POST['status'];
 
             /**
@@ -81,7 +86,7 @@ class UsersController extends \Core\Controller
 
                     $userServics = new UserService();
 
-                    $user = $userServics->create($firstname, $lastname, $email, $password, $roleid, $status);
+                    $user = $userServics->create($firstname, $lastname, $email, $password, $roleid, $packageid, $status);
 
 
                     /* Redirect to index/All posts page */
@@ -105,6 +110,7 @@ class UsersController extends \Core\Controller
                 'lastname' => $lastname,
                 'email' => $email,
                 'roleid' => $roleid,
+                'packageid' => $packageid,
                 'password' => $password,
                 'status' => $status,
                 'errors' => $this->getErrors()
@@ -118,7 +124,8 @@ class UsersController extends \Core\Controller
          */
 
         View::renderTemplate('Users/addUser.html', [
-            'roles' => $roles
+            'roles' => $roles,
+            'packages' => $packages
         ]);
         return;
     }
@@ -135,6 +142,9 @@ class UsersController extends \Core\Controller
         $roleServices = new RoleService();
         $roles = $roleServices->readAll();
 
+        $packageServices = new PackageService();
+        $packages = $packageServices->readAll();
+
         /**
          * Checking is it POST - Take new content - Validate data - Update action
          */
@@ -147,6 +157,7 @@ class UsersController extends \Core\Controller
             $email = $_POST['email'];
             $password = $_POST['password'];
             $roleid = $_POST['roleid'];
+            $packageid = $_POST['packageid'];
             $status = $_POST['status'];
 
             /**
@@ -170,7 +181,7 @@ class UsersController extends \Core\Controller
 
                     $userServices = new UserService();
 
-                    $user = $userServices->update($id, $firstname, $lastname, $email, $password, $roleid, $status);
+                    $user = $userServices->update($id, $firstname, $lastname, $email, $password, $roleid, $packageid, $status);
 
                     /**
                      * Redirect to index/All posts page
@@ -195,6 +206,7 @@ class UsersController extends \Core\Controller
                 'email' => $email,
                 'password' => $password,
                 'roleid' => $roleid,
+                'packageid' => $packageid,
                 'status' => $status,
                 'errors' => $this->getErrors()
             ]);
@@ -210,12 +222,14 @@ class UsersController extends \Core\Controller
             $userServices = new UserService();
             $user = $userServices->readOne($id);
 
+
             $id = $user->getId();
             $firstname = $user->getFirstname();
             $lastname = $user->getLastname();
             $email = $user->getEmail();
             $password = $user->getPassword();
             $roleid = $user->getRole();
+            $packageid = $user->getPackage();
             $status = $user->getStatus();
 
             View::renderTemplate('Users/editUser.html', [
@@ -225,8 +239,10 @@ class UsersController extends \Core\Controller
                 'email' => $email,
                 'password' => $password,
                 'roleid' => $roleid,
+                'packageid' => $packageid,
                 'status' => $status,
-                'roles' => $roles
+                'roles' => $roles,
+                'packages' => $packages
             ]);
         }
 

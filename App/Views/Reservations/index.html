@@ -54,7 +54,17 @@
                         <td>{{ reservation.datecreated }}</td>
                         <td>{{ reservation.dateend }}</td>
                         <td>{{ reservation.description }}</td>
-                        <td>{{ reservation.status }}</td>
+                        <td>
+                            {% if reservation.status > 0 %}
+
+                            Reserved
+
+                            {% else %}
+
+                            Free
+
+                            {% endif %}
+                        </td>
                         <td><a href="/reservations/edit/{{ reservation.id }}">Edit</a></td>
                     </tr>
                     {% endfor %}

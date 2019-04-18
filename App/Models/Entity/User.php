@@ -11,6 +11,7 @@ class User extends \App\Models\RoleService{
     private $email;
     private $password;
     private $role;
+    private $package;
     private $status;
 
     /**
@@ -107,6 +108,22 @@ class User extends \App\Models\RoleService{
     public function setRole($role): void
     {
         $this->role = $role;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPackage()
+    {
+        return $this->package;
+    }
+
+    /**
+     * @param $package
+     */
+    public function setPackage($package): void
+    {
+        $this->package = $package;
     }
 
     /**

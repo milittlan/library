@@ -37,6 +37,7 @@
                             <th>Last Name</th>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Package</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -52,7 +53,19 @@
                         <td>{{ user.lastname }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.role }}</td>
-                        <td>{{ user.status }}</td>
+                        <td>{{ user.package }}</td>
+                        <td>
+                            {% if user.status > 0 %}
+
+                            Active
+
+                            {% else %}
+
+                            Disabled
+
+                            {% endif %}
+
+                        </td>
                         <td><a href="/users/edit/{{ user.id }}">Edit</a></td>
                     </tr>
                     {% endfor %}

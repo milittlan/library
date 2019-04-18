@@ -223,6 +223,8 @@ class ReservationsController extends \Core\Controller
                 'duration' => $datecreated,
                 'dateend' => $dateend,
                 'description' => $description,
+                'users' => $users,
+                'books' => $books,
                 'status' => $status
             ]);
         }

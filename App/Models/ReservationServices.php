@@ -40,11 +40,21 @@ class ReservationServices extends \Core\Model   {
 
         foreach($results as $item) {
 
+            $userReservations = new UserService();
+            $bookReservations = new BookService();
+
             $reservation = new Reservation();
 
             $reservation->setId($item['id']);
+
             $reservation->setUserid($item['user_id']);
-            $reservation->setBookid($item['book_id']);
+
+            $userReservation = $userReservations->readOne($item['user_id']);
+            $reservation->setUserid($userReservation->getFirstname());
+
+            $bookReservation = $bookReservations->readOne($item['book_id']);
+            $reservation->setBookid($bookReservation->getTitle());
+
             $reservation->setDatecreated($item['date_created']);
             $reservation->setDateend($item ['date_end']);
             $reservation->setDescription($item ['description']);
@@ -88,11 +98,21 @@ class ReservationServices extends \Core\Model   {
          * Take value from array and put data array into Entity
          */
 
+        $userReservations = new UserService();
+        $bookReservations = new BookService();
+
         $reservation = new Reservation();
 
         $reservation->setId($results['id']);
-        $reservation->setUserid($results['user_id']);
-        $reservation->setBookid($results['book_id']);
+
+
+        $userReservation = $userReservations->readOne($results['user_id']);
+        $reservation->setUserid($userReservation);
+
+
+        $bookReservation = $bookReservations->readOne($results['book_id']);
+        $reservation->setBookid($bookReservation);
+
         $reservation->setDatecreated($results['date_created']);
         $reservation->setDateend($results['date_end']);
         $reservation->setDescription($results['description']);

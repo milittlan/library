@@ -155,7 +155,7 @@ class PackagesController extends \Core\Controller
 
                     $packageServices = new PackageService();
 
-                    $package = $packageServices->update($id, $name, $value, $duration, $user_id);
+                    $package = $packageServices->update($id, $name, $value, $duration);
 
                     /**
                      * Redirect to index/All posts page

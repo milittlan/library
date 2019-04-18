@@ -26,7 +26,7 @@ class UserService extends \Core\Model   {
          * Query - Select all users from database
          */
 
-        $stmt = $db->query('SELECT id, firstname, lastname, email, role_id, status FROM user ORDER BY id');
+        $stmt = $db->query('SELECT id, firstname, lastname, email, role_id, package_id, status FROM user ORDER BY id');
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
@@ -41,6 +41,7 @@ class UserService extends \Core\Model   {
         foreach($results as $item) {
 
             $RoleService = new RoleService();
+            $packageServices = new PackageService();
 
 
             $user = new User();
@@ -49,11 +50,17 @@ class UserService extends \Core\Model   {
             $user->setFirstname( $item['firstname']);
             $user->setLastname( $item['lastname']);
             $user->setEmail($item['email']);
+
             $user->setRole($item['role_id']);
-            $user->setStatus($item['status']);
+            $user->setPackage($item['package_id']);
 
             $userRole = $RoleService->readOne($item['role_id']);
             $user->setRole($userRole->getName());
+
+            $packageUser = $packageServices->readOne($item['package_id']);
+            $user->setPackage($packageUser->getName());
+
+            $user->setStatus($item['status']);
 
             /* add entity to array */
             array_push($users,  $user);
@@ -94,7 +101,10 @@ class UserService extends \Core\Model   {
          */
 
         $Roleservices = new RoleService();
+        $packageServices = new PackageService();
+
         $user = new User();
+
 
         $user->setId($results['id']);
         $user->setFirstname($results['firstname']);
@@ -102,10 +112,12 @@ class UserService extends \Core\Model   {
         $user->setEmail($results['email']);
 
         $userRole = $Roleservices->readOne($results['role_id']);
-        $user->setRole($userRole->getName());
+        $user->setRole($userRole);
+
+        $userPackage = $packageServices->readOne($results['package_id']);
+        $user->setPackage($userPackage);
 
         $user->setStatus($results['status']);
-
 
         /* Return Entity */
 
@@ -123,7 +135,7 @@ class UserService extends \Core\Model   {
      * @param $status
      * @return bool
      */
-    public function create ($firstname, $lastname, $email, $password, $role, $status)
+    public function create ($firstname, $lastname, $email, $password, $role, $package, $status)
     {
 
         $user = new User();
@@ -133,6 +145,7 @@ class UserService extends \Core\Model   {
         $user->setEmail($email);
         $user->setPassword($password);
         $user->setRole($role);
+        $user->setPackage($package);
         $user->setStatus($status);
 
 
@@ -147,13 +160,14 @@ class UserService extends \Core\Model   {
          * Query - Insert user into database
          */
 
-        $stmt = $db->prepare("INSERT INTO user (firstname, lastname, email, password, role_id, status) VALUES (:firstname, :lastname, :email, :password, :role_id, :status)");
+        $stmt = $db->prepare("INSERT INTO user (firstname, lastname, email, password, role_id, package_id, status) VALUES (:firstname, :lastname, :email, :password, :role_id, :package_id, :status)");
 
         $firstname = $user->getFirstname();
         $lastname = $user->getLastname();
         $email = $user->getEmail();
         $password = $user->getPassword();
         $role = $user->getRole();
+        $package = $user->getPackage();
         $status = $user->getStatus();
 
         $stmt->bindParam(':firstname', $firstname, PDO::PARAM_STR);
@@ -161,6 +175,7 @@ class UserService extends \Core\Model   {
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
         $stmt->bindParam(':role_id', $role, PDO::PARAM_STR);
+        $stmt->bindParam(':package_id', $package, PDO::PARAM_STR);
         $stmt->bindParam(':status', $status, PDO::PARAM_STR);
 
         $results = $stmt->execute();
@@ -185,7 +200,7 @@ class UserService extends \Core\Model   {
      * @param $description
      * @return bool
      */
-    public function update ($id, $firstname, $lastname, $email, $password, $role, $status)
+    public function update ($id, $firstname, $lastname, $email, $password, $role, $package, $status)
     {
         /**
          * Take existing value from post
@@ -199,6 +214,7 @@ class UserService extends \Core\Model   {
         $user->setEmail($email);
         $user->setPassword($password);
         $user->setRole($role);
+        $user->setPackage($package);
         $user->setStatus($status);
 
 
@@ -211,7 +227,7 @@ class UserService extends \Core\Model   {
          * Query - Update posts
          */
 
-        $stmt = $db->prepare("UPDATE user SET id = :id, firstname = :firstname, lastname = :lastname, email = :email, password = :password, role_id = :role_id, status = :status WHERE id = :id");
+        $stmt = $db->prepare("UPDATE user SET id = :id, firstname = :firstname, lastname = :lastname, email = :email, password = :password, role_id = :role_id, package_id = :package_id, status = :status WHERE id = :id");
 
         $id = $user->getId();
         $firstname = $user->getFirstname();
@@ -219,6 +235,7 @@ class UserService extends \Core\Model   {
         $email = $user->getEmail();
         $password = $user->getPassword();
         $role = $user->getRole();
+        $package = $user->getPackage();
         $status = $user->getStatus();
 
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
@@ -227,6 +244,7 @@ class UserService extends \Core\Model   {
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
         $stmt->bindParam(':role_id', $role, PDO::PARAM_STR);
+        $stmt->bindParam(':package_id', $package, PDO::PARAM_STR);
         $stmt->bindParam(':status', $status, PDO::PARAM_STR);
 
         $results = $stmt->execute();
