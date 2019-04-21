@@ -61,6 +61,7 @@ class PermissionsController extends \Core\Controller  {
 
             $name   = $_POST['name'];
             $moduleid = $_POST['moduleid'];
+            $machinename = $_POST['machinename'];
 
             /**
              *
@@ -84,7 +85,7 @@ class PermissionsController extends \Core\Controller  {
 
                     $permissionServices = new PermissionService();
 
-                    $permission = $permissionServices->create($name, $moduleid);
+                    $permission = $permissionServices->create($name, $moduleid, $machinename);
 
 
                     /* Redirect to index/All books page */
@@ -106,6 +107,7 @@ class PermissionsController extends \Core\Controller  {
             View::renderTemplate('Permissions/addPermission.html', [
                 'name' => $name,
                 'module' => $moduleid,
+                'machinename' => $machinename,
                 'errors' => $this->getErrors()
 
             ]);
@@ -143,6 +145,7 @@ class PermissionsController extends \Core\Controller  {
 
             $id = $_POST['id'];
             $name   = $_POST['name'];
+            $machinename = $_POST['machinename'];
             $module   = $_POST['module_id'];
 
             /**
@@ -168,7 +171,7 @@ class PermissionsController extends \Core\Controller  {
 
                     $permissionServices = new PermissionService();
 
-                    $permission = $permissionServices->update($id, $name, $module);
+                    $permission = $permissionServices->update($id, $name, $machinename, $module);
 
                     /**
                      * Redirect to index/All perrmission page
@@ -189,6 +192,7 @@ class PermissionsController extends \Core\Controller  {
             View::renderTemplate('Permissions/editPermission.html', [
                 'id' => $id,
                 'name' => $name,
+                'machinename' => $machinename,
                 'modules' => $modules,
                 'module_id' => $module,
                 'errors' => $this->getErrors()
@@ -207,12 +211,14 @@ class PermissionsController extends \Core\Controller  {
 
             $id = $permission->getId();
             $name = $permission->getName();
+            $machinename = $permission->getMachinename();
             $module = $permission->getModule();
 
 
             View::renderTemplate('Permissions/editPermission.html', [
                 'id' => $id,
                 'name' => $name,
+                'machinename' => $machinename,
                 'modules' => $modules,
                 'module_id' => $module
             ]);
@@ -245,7 +251,7 @@ class PermissionsController extends \Core\Controller  {
 
                 /* Redirect to index/All posts page */
 
-                header('Location: /roles/index');
+                header('Location: /permissions/index');
 
 
             } catch (PDOException $e) {

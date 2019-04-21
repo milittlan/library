@@ -50,6 +50,7 @@ class RolesController extends \Core\Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $name   = $_POST['name'];
+            $machinename = $_POST['machinename'];
             $description = $_POST['description'];
 
             /**
@@ -78,7 +79,7 @@ class RolesController extends \Core\Controller
 
                     $roleServices = new RoleService();
 
-                    $role = $roleServices->create($name, $description);
+                    $role = $roleServices->create($name, $machinename, $description);
 
 
                     /* Redirect to index/All posts page */
@@ -99,6 +100,7 @@ class RolesController extends \Core\Controller
 
             View::renderTemplate('Roles/addRole.html', [
                 'name' => $name,
+                'machinename' => $machinename,
                 'description' => $description,
                 'errors' => $this->getErrors()
             ]);
@@ -130,6 +132,7 @@ class RolesController extends \Core\Controller
 
             $id   = $_POST['id'];
             $name   = $_POST['name'];
+            $machinename = $_POST['machinename'];
             $description = $_POST['description'];
 
             /**
@@ -157,7 +160,7 @@ class RolesController extends \Core\Controller
 
                     $roleServices = new RoleService();
 
-                    $role = $roleServices->update($id, $name, $description);
+                    $role = $roleServices->update($id, $name, $machinename, $description);
 
                     /**
                      * Redirect to index/All posts page
@@ -178,6 +181,7 @@ class RolesController extends \Core\Controller
             View::renderTemplate('Roles/editRole.html', [
                 'id' => $id,
                 'name' => $name,
+                'machinename' => $machinename,
                 'description' => $description,
                 'errors' => $this->getErrors()
             ]);
@@ -195,11 +199,13 @@ class RolesController extends \Core\Controller
 
             $id = $role->getId();
             $name = $role->getName();
+            $machinename = $role->getMachinename();
             $description = $role->getDescription();
 
             View::renderTemplate('Roles/editRole.html', [
                 'id' => $id,
                 'name' => $name,
+                'machinename' => $machinename,
                 'description' => $description
             ]);
         }

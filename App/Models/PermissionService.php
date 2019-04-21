@@ -27,7 +27,7 @@ class PermissionService extends \Core\Model   {
          * Query - Select all modules from database
          */
 
-        $stmt = $db->query('SELECT id, permission, module_id FROM permissions ORDER BY id');
+        $stmt = $db->query('SELECT id, permission, machine_name, module_id  FROM permissions ORDER BY id');
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
@@ -47,6 +47,7 @@ class PermissionService extends \Core\Model   {
 
             $permission->setId($item['id']);
             $permission->setName($item['permission']);
+            $permission->setMachinename($item['machine_name']);
             $permission->setModule($item['module_id']);
 
             $moduleServices = $moduleServices->readOne($item['module_id']);
@@ -96,9 +97,10 @@ class PermissionService extends \Core\Model   {
 
         $permission->setId($results['id']);
         $permission->setName($results['permission']);
+        $permission->setMachinename($results['machine_name']);
 
         $moduleName = $moduleServices->readOne($results['module_id']);
-        $permission->setModule($moduleName->getName());
+        $permission->setModule($moduleName);
 
 
 
@@ -109,21 +111,19 @@ class PermissionService extends \Core\Model   {
     }
 
     /**
-     * @param $title
-     * @param $alias
-     * @param $author
-     * @param $publisher
-     * @param $category_id
-     * @param $status
+     * @param $name
+     * @param $module
+     * @param $machinename
      * @return bool
      */
-    public function create($name, $module)
+    public function create($name, $module, $machinename)
     {
 
         $permission = new Permission();
 
         $permission->setName($name);
         $permission->setModule($module);
+        $permission->setMachinename($machinename);
 
 
         /**
@@ -137,16 +137,18 @@ class PermissionService extends \Core\Model   {
          * Query - Select all books from database
          */
 
-        $stmt = $db->prepare("INSERT INTO permissions (permission, module_id) VALUES (:name, :module_id)");
+        $stmt = $db->prepare("INSERT INTO permissions (permission, module_id, machinename) VALUES (:name, :module_id, :machinename)");
 
 
         $name = $permission->getName();
         $module = $permission->getModule();
+        $machinename = $permission->getMachinename();
 
 
 
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':module_id', $module, PDO::PARAM_STR);
+        $stmt->bindParam(':machinename', $machinename, PDO::PARAM_STR);
 
 
         $results = $stmt->execute();
@@ -166,10 +168,11 @@ class PermissionService extends \Core\Model   {
     /**
      * @param $id
      * @param $name
+     * @param $machinename
      * @param $module
      * @return bool
      */
-    public function update ($id, $name, $module)
+    public function update ($id, $name, $machinename, $module)
     {
 
         /**
@@ -181,6 +184,7 @@ class PermissionService extends \Core\Model   {
         $permission->setId($id);
         $permission->setName($name);
         $permission->setModule($module);
+        $permission->setMachinename($machinename);
 
 
         /* DB connection */
@@ -192,16 +196,18 @@ class PermissionService extends \Core\Model   {
          * Query - Update book
          */
 
-        $stmt = $db->prepare("UPDATE permissions SET permission = :name, module_id = :module_id WHERE id = :id");
+        $stmt = $db->prepare("UPDATE permissions SET permission = :name, module_id = :module_id, machine_name = :machinename WHERE id = :id");
 
         $id = $permission->getId();
         $name = $permission->getName();
         $module = $permission->getModule();
+        $machinename = $permission->getMachinename();
 
 
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':module_id', $module, PDO::PARAM_STR);
+        $stmt->bindParam(':machinename', $machinename, PDO::PARAM_STR);
 
         $results = $stmt->execute();
 
@@ -220,7 +226,6 @@ class PermissionService extends \Core\Model   {
     /**
      * @param $id
      * @return bool
-     *
      */
     public function delete($id)
     {

@@ -26,7 +26,7 @@ class RoleService extends \Core\Model   {
          * Query - Select all posts from database
          */
 
-        $stmt = $db->query('SELECT id, name, description FROM roles ORDER BY id');
+        $stmt = $db->query('SELECT id, name, machine_name, description FROM roles ORDER BY id');
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
@@ -44,6 +44,7 @@ class RoleService extends \Core\Model   {
 
             $role->setId($item['id']);
             $role->setName($item['name']);
+            $role->setMachinename($item['machine_name']);
             $role->setDescription($item['description']);
 
             /* add entity to array */
@@ -88,6 +89,7 @@ class RoleService extends \Core\Model   {
 
         $role->setId($results['id']);
         $role->setName($results['name']);
+        $role->setMachinename($results['machine_name']);
         $role->setDescription($results['description']);
 
 
@@ -102,12 +104,13 @@ class RoleService extends \Core\Model   {
      * @param $content
      * @return mixed
      */
-    public function create($name, $description)
+    public function create($name, $machinename, $description)
     {
 
         $role = new Role();
 
         $role->setName($name);
+        $role->setMachinename($machinename);
         $role->setDescription($description);
 
         /**
@@ -121,12 +124,13 @@ class RoleService extends \Core\Model   {
          * Query - Insert post into database
          */
 
-        $stmt = $db->prepare("INSERT INTO roles (name, description) VALUES (:name, :description)");
+        $stmt = $db->prepare("INSERT INTO roles (name, machine_name, description) VALUES (:name, :machinename, :description)");
 
         $name = $role->getName();
         $description = $role->getDescription();
 
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':machinename', $machinename, PDO::PARAM_STR);
         $stmt->bindParam(':description', $description, PDO::PARAM_STR);
 
         $results = $stmt->execute();
@@ -151,7 +155,7 @@ class RoleService extends \Core\Model   {
      * @param $description
      * @return bool
      */
-    public function update($id, $name, $description)
+    public function update($id, $name, $machinename, $description)
     {
         /**
          * Take existing value from post
@@ -161,6 +165,7 @@ class RoleService extends \Core\Model   {
 
         $role->setId($id);
         $role->setName($name);
+        $role->setMachinename($machinename);
         $role->setDescription($description);
 
 
@@ -173,7 +178,7 @@ class RoleService extends \Core\Model   {
          * Query - Update posts
          */
 
-        $stmt = $db->prepare("UPDATE roles SET name = :name, description = :description WHERE id = :id");
+        $stmt = $db->prepare("UPDATE roles SET name = :name, machine_name = :machinename, description = :description WHERE id = :id");
 
         $id = $role->getId();
         $name = $role->getName();
@@ -181,6 +186,7 @@ class RoleService extends \Core\Model   {
 
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':machinename', $machinename, PDO::PARAM_STR);
         $stmt->bindParam(':description', $description, PDO::PARAM_STR);
 
         $results = $stmt->execute();

@@ -7,6 +7,7 @@ class Role extends \App\Models\RoleService{
 
     private $id;
     private $name;
+    private $machinename;
     private $description;
 
     /**
@@ -39,6 +40,22 @@ class Role extends \App\Models\RoleService{
     public function setName($name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMachinename()
+    {
+        return $this->machinename;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setMachinename($machinename): void
+    {
+        $this->machinename = $machinename;
     }
 
     /**

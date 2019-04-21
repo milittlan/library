@@ -34,6 +34,7 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
+                            <th>Machinename</th>
                             <th>Description</th>
                             <th>Action</th>
                         </tr>
@@ -46,6 +47,7 @@
                     <tr>
                         <td>{{ role.id }}</td>
                         <td>{{ role.name }}</td>
+                        <td>{{ role.machinename }}</td>
                         <td>{{ role.description }}</td>
                         <td><a href="/roles/edit/{{ role.id }}">Edit</a></td>
                     </tr>

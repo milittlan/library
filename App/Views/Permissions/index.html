@@ -34,6 +34,7 @@
                         <tr>
                             <th>#</th>
                             <th>Permission</th>
+                            <th>Machinename</th>
                             <th>Module</th>
                             <th>Action</th>
                         </tr>
@@ -46,6 +47,7 @@
                     <tr>
                         <td>{{ permission.id }}</td>
                         <td>{{ permission.name }}</td>
+                        <td>{{ permission.machinename }}</td>
                         <td>{{ permission.module }}</td>
                         <td><a href="/permissions/edit/{{ permission.id }}">Edit</a></td>
                     </tr>
