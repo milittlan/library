@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>Edit user</h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);">Action</a></li>
+                            <li><a href="javascript:void(0);">Another action</a></li>
+                            <li><a href="javascript:void(0);">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <form id="form_validation" method="POST" action="/users/edit/{{id}}">
+
+                    {% if errors is not empty %}
+
+                    <div class="col-white alert-danger" style="margin-bottom: 20px;">
+                        {{ errors|join(',') }}
+                    </div>
+
+                    {% endif %}
+
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="firstname"  value="{{ firstname }}" required>
+                            <label class="form-label">Firstname</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="lastname" required value="{{ lastname }}">
+                            <label class="form-label">Lastname</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="email" required value="{{ email }}">
+                            <label class="form-label">Email</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="password" required value="{{ password }}">
+                            <label class="form-label">Password</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <select class="form-control show-tick" name="roleid">
+                                <option value="{{roleid.id}}">{{roleid.name}}</option>
+
+                                {% for role in roles %}
+                                <option value="{{ role.id }}">{{ role.name }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <select class="form-control show-tick" name="packageid">
+
+                                <<option value="{{packageid.id}}">{{packageid.name}}</option>
+
+                                {% for package in packages %}
+                                <option value="{{ package.id }}">{{ package.name }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <select class="form-control show-tick" name="status">
+
+                                {% if status  > 0 %}
+                                <option value="{{status}}">Active</option>
+                                {% else %}
+                                <option value="{{status}}">Disabled</option>
+                                {% endif %}
+
+                                <option value="1">Active</option>
+                                <option value="0">Disabled</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <input type="text" name="id" value="{{id}}" hidden>
+
+                    <button class="btn btn-primary waves-effect" type="submit" value="Submit" name="insert-role">Save
+                    </button>
+
+                </form>
+
+                <form id="form_validation" method="POST" action="/users/delete/{{ id }}">
+                    <input type="text" name="id" value="{{ user.id }}" hidden>
+                    <button class="btn btn-primary waves-effect" type="submit" value="Submit" name="delete-user">delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

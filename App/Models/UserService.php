@@ -135,7 +135,7 @@ class UserService extends \Core\Model   {
      * @param $status
      * @return bool
      */
-    public function create ($firstname, $lastname, $email, $password, $role, $package, $status)
+    public function create ($firstname, $lastname, $email, $hashpassword, $role, $package, $status)
     {
 
         $user = new User();
@@ -143,7 +143,7 @@ class UserService extends \Core\Model   {
         $user->setFirstname($firstname);
         $user->setLastname($lastname);
         $user->setEmail($email);
-        $user->setPassword($password);
+        $user->setPassword($hashpassword);
         $user->setRole($role);
         $user->setPackage($package);
         $user->setStatus($status);
@@ -165,7 +165,7 @@ class UserService extends \Core\Model   {
         $firstname = $user->getFirstname();
         $lastname = $user->getLastname();
         $email = $user->getEmail();
-        $password = $user->getPassword();
+        $hashpassword = $user->getPassword();
         $role = $user->getRole();
         $package = $user->getPackage();
         $status = $user->getStatus();
@@ -173,7 +173,7 @@ class UserService extends \Core\Model   {
         $stmt->bindParam(':firstname', $firstname, PDO::PARAM_STR);
         $stmt->bindParam(':lastname', $lastname, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+        $stmt->bindParam(':password', $hashpassword, PDO::PARAM_STR);
         $stmt->bindParam(':role_id', $role, PDO::PARAM_STR);
         $stmt->bindParam(':package_id', $package, PDO::PARAM_STR);
         $stmt->bindParam(':status', $status, PDO::PARAM_STR);

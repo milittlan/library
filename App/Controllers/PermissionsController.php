@@ -64,14 +64,16 @@ class PermissionsController extends \Core\Controller  {
             $machinename = $_POST['machinename'];
 
             /**
-             *
-             * Validate name
-             * For testing we are checking does fields have exact content.
-             *
+             * Its post!
+             * machine name
              */
-            if ($name == 'aaa') {
-                $error_message = 'Greska - polje Name ne moze da ima ovaj sadrzaj';
-                $this->addError($error_message);
+
+            if (empty($machinename)) {
+                $machinename = strtolower($name);
+                $machinename = preg_replace('/\s+/', '_', $machinename);
+            } else {
+                $machinename = strtolower($machinename);
+                $machinename = preg_replace('/\s+/', '_', $machinename);
             }
 
 
@@ -153,13 +155,13 @@ class PermissionsController extends \Core\Controller  {
              * validation of updated content
              */
 
-            if ($name == 'aaa') {
-                $error_message = 'Greska - polje Title ne moze da ima ovaj sadrzaj';
-                $this->addError($error_message);
+            if (empty($machinename)) {
+                $machinename = strtolower($name);
+                $machinename = preg_replace('/\s+/', '_', $machinename);
+            } else {
+                $machinename = strtolower($machinename);
+                $machinename = preg_replace('/\s+/', '_', $machinename);
             }
-
-
-
 
             /**
              * Check errors

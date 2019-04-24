@@ -71,9 +71,8 @@ class UsersController extends \Core\Controller
              * For testing we are checking does fields have exact content.
              *
              */
-            if ($firstname == 'aaa') {
-                $error_message = 'Greska - polje Name ne moze da ima ovaj sadrzaj';
-                $this->addError($error_message);
+            if (!empty($password)) {
+                $hashpassword = password_hash($password, PASSWORD_DEFAULT);
             }
 
             /**
@@ -86,7 +85,7 @@ class UsersController extends \Core\Controller
 
                     $userServics = new UserService();
 
-                    $user = $userServics->create($firstname, $lastname, $email, $password, $roleid, $packageid, $status);
+                    $user = $userServics->create($firstname, $lastname, $email, $hashpassword, $roleid, $packageid, $status);
 
 
                     /* Redirect to index/All posts page */
@@ -100,9 +99,7 @@ class UsersController extends \Core\Controller
             }
 
             /**
-             *
-             * IF EROOR is not empty - Display forms with error message and content.
-             *
+             * IF EROOR is not empty - Display forms with error message and content
              */
 
             View::renderTemplate('Users/addUser.html', [
@@ -161,7 +158,7 @@ class UsersController extends \Core\Controller
             $status = $_POST['status'];
 
             /**
-             * ITs User!
+             * Its User!
              * validation of updated content
              */
 
@@ -221,7 +218,6 @@ class UsersController extends \Core\Controller
 
             $userServices = new UserService();
             $user = $userServices->readOne($id);
-
 
             $id = $user->getId();
             $firstname = $user->getFirstname();

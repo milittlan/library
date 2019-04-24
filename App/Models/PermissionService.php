@@ -137,7 +137,7 @@ class PermissionService extends \Core\Model   {
          * Query - Select all books from database
          */
 
-        $stmt = $db->prepare("INSERT INTO permissions (permission, module_id, machinename) VALUES (:name, :module_id, :machinename)");
+        $stmt = $db->prepare("INSERT INTO permissions (permission, module_id, machine_name) VALUES (:name, :module_id, :machinename)");
 
 
         $name = $permission->getName();
