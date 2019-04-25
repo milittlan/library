@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\ModuleService;
 use App\Models\PermissionService;
 use App\Models\RolePermissionService;
 use App\Models\RoleService;
@@ -18,22 +19,17 @@ class RolesPermissionsController extends \Core\Controller
     public function indexAction()
     {
 
-        $permissionServices = new PermissionService();
-        $permissions = $permissionServices->readAll();
 
-        $roleServices = new RoleService();
-        $roles = $roleServices->readAll();
 
         $rolepermissionServices = new RolePermissionService();
-        $rolepermission = $rolepermissionServices->readAll();
+        $rolesPermissions = $rolepermissionServices->readAll();
 
         /**
          * Render template for all users
          */
 
         View::renderTemplate('RolesPermissions/index.html', [
-            'permissions' => $permissions,
-            'roles' => $roles
+            'rolespermissions' => $rolesPermissions
         ]);
 
     }
@@ -55,6 +51,7 @@ class RolesPermissionsController extends \Core\Controller
 
             $roleid   = $_POST['roleid'];
             $permissionid = $_POST['permissionid'];
+            $bookid = $_POST['bookid'];
 
             /**
              *
@@ -99,6 +96,7 @@ class RolesPermissionsController extends \Core\Controller
             View::renderTemplate('Reservations/addReservation.html', [
                 'roleid' => $roleid,
                 'permissionid' => $permissionid,
+                'bookid' => $bookid,
                 'errors' => $this->getErrors()
             ]);
             return;
@@ -111,6 +109,7 @@ class RolesPermissionsController extends \Core\Controller
 
         View::renderTemplate('RolesPermissions/addRolePermission.html', [
             'roles' => $roles,
+            'books' => $books,
             'permissions' => $permissions
         ]);
         return;

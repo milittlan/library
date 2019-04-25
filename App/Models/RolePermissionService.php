@@ -27,7 +27,7 @@ class RolePermissionService extends \Core\Model   {
          * Query - Select all posts from database
          */
 
-        $stmt = $db->query('SELECT role_id, permission_id FROM roles_permissions ORDER BY role_id');
+        $stmt = $db->query('SELECT id, role_id, permission_id, module_id FROM roles_permissions ORDER BY id');
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
@@ -41,10 +41,22 @@ class RolePermissionService extends \Core\Model   {
 
         foreach($results as $item) {
 
+            $permissions = new PermissionService();
+            $roles = new RoleService();
+            $modules = new ModuleService();
+
             $rolePermission = new RolePermission();
 
-            $rolePermission->setRoleId($item['role_id']);
-            $rolePermission->setPermissionId($item['permission_id']);
+            $rolePermission->setId($item['id']);
+
+            $permission = $permissions->readOne($item['permission_id']);
+            $rolePermission->setPermissionid($permission);
+
+            $role = $roles->readOne($item['role_id']);
+            $rolePermission->setRoleid($role);
+
+            $module = $modules->readOne($item['module_id']);
+            $rolePermission->setModuleid($module);
 
 
             /* add entity to array */

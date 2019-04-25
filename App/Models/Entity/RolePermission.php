@@ -5,41 +5,74 @@ namespace App\Models\Entity;
 
 class RolePermission extends \App\Models\RolePermissionService {
 
-    private $role_id;
-    private $permission_id;
+    private $id;
+    private $roleid;
+    private $permissionid;
+    private $moduleid;
 
     /**
      * @return mixed
      */
-    public function getRoleId()
+    public function getId()
     {
-        return $this->role_id;
+        return $this->id;
     }
 
     /**
-     * @param mixed $role_id
+     * @param mixed $id
      */
-    public function setRoleId($role_id): void
+    public function setId($id): void
     {
-        $this->role_id = $role_id;
+        $this->id = $id;
     }
 
     /**
      * @return mixed
      */
-    public function getPermissionId()
+    public function getRoleid()
     {
-        return $this->permission_id;
+        return $this->roleid;
     }
 
     /**
-     * @param mixed $permission_id
+     * @param mixed $roleid
      */
-    public function setPermissionId($permission_id): void
+    public function setRoleid($roleid): void
     {
-        $this->permission_id = $permission_id;
+        $this->roleid = $roleid;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPermissionid()
+    {
+        return $this->permissionid;
+    }
+
+    /**
+     * @param mixed $permissionid
+     */
+    public function setPermissionid($permissionid): void
+    {
+        $this->permissionid = $permissionid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModuleid()
+    {
+        return $this->moduleid;
+    }
+
+    /**
+     * @param mixed $moduleid
+     */
+    public function setModuleid($moduleid): void
+    {
+        $this->moduleid = $moduleid;
+    }
 
 
 }

@@ -32,9 +32,10 @@
 
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>id</th>
                             <th>Roles</th>
                             <th>Permission</th>
+                            <th>Module</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -44,9 +45,11 @@
                     {% for rolepermission in rolespermissions %}
 
                     <tr>
-                        <td>{{ rolepermission.roleid }}</td>
-                        <td>{{ rolepermission.permissionid }}</td>
-                        <td><a href="/users/edit/{{ user.id }}">Edit</a></td>
+                        <td>{{ rolepermission.id }}</td>
+                        <td>{{ rolepermission.roleid.name }}</td>
+                        <td>{{ rolepermission.permissionid.name }}</td>
+                        <td>{{ rolepermission.moduleid.name }}</td>
+                        <td><a href="/rolespermission/edit/{{ rolepermission.id }}">Edit</a></td>
                     </tr>
                     {% endfor %}
 
