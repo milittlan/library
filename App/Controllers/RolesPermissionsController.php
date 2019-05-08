@@ -42,6 +42,9 @@ class RolesPermissionsController extends \Core\Controller
         $roleServices = new RoleService();
         $roles = $roleServices->readAll();
 
+        $moduleServices = new ModuleService();
+        $modules = $moduleServices->readAll();
+
 
         /**
          * Checking is it post - create reservation in database - redirect to index
@@ -51,7 +54,7 @@ class RolesPermissionsController extends \Core\Controller
 
             $roleid   = $_POST['roleid'];
             $permissionid = $_POST['permissionid'];
-            $bookid = $_POST['bookid'];
+            $moduleid = $_POST['moduleid'];
 
             /**
              *
@@ -74,7 +77,7 @@ class RolesPermissionsController extends \Core\Controller
 
                     $rolepermissionServices = new RolePermissionService();
 
-                    $rolepermission = $rolepermissionServices->create($roleid, $permissionid);
+                    $rolepermission = $rolepermissionServices->create($roleid, $permissionid, $moduleid);
 
 
                     /* Redirect to index/All posts page */
@@ -93,10 +96,10 @@ class RolesPermissionsController extends \Core\Controller
              *
              */
 
-            View::renderTemplate('Reservations/addReservation.html', [
+            View::renderTemplate('RolesPermissions/addRolePermission.html', [
                 'roleid' => $roleid,
                 'permissionid' => $permissionid,
-                'bookid' => $bookid,
+                'moduleid' => $moduleid,
                 'errors' => $this->getErrors()
             ]);
             return;
@@ -109,7 +112,7 @@ class RolesPermissionsController extends \Core\Controller
 
         View::renderTemplate('RolesPermissions/addRolePermission.html', [
             'roles' => $roles,
-            'books' => $books,
+            'modules' => $modules,
             'permissions' => $permissions
         ]);
         return;

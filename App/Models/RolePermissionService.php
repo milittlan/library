@@ -116,13 +116,14 @@ class RolePermissionService extends \Core\Model   {
      * @param $permissionid
      * @return bool
      */
-    public function create($roleid, $permissionid)
+    public function create($roleid, $permissionid, $moduleid)
     {
 
         $rolePermission = new RolePermission();
 
         $rolePermission->setRoleId($roleid);
         $rolePermission->setPermissionId($permissionid);
+        $rolePermission->setModuleid($moduleid);
 
         /**
          * DB connection
@@ -135,13 +136,15 @@ class RolePermissionService extends \Core\Model   {
          * Query - Insert post into database
          */
 
-        $stmt = $db->prepare("INSERT INTO roles_permissions (role_id, permission_id) VALUES (:roleid, :permissionid)");
+        $stmt = $db->prepare("INSERT INTO roles_permissions (role_id, permission_id, module_id) VALUES (:roleid, :permissionid, :moduleid)");
 
         $roleid = $rolePermission->getRoleId();
         $permission_id = $rolePermission->getPermissionId();
+        $module_id = $rolePermission->getModuleid();
 
         $stmt->bindParam(':roleid', $roleid, PDO::PARAM_STR);
         $stmt->bindParam(':permissionid', $permission_id, PDO::PARAM_STR);
+        $stmt->bindParam(':moduleid', $module_id, PDO::PARAM_STR);
 
 
         $results = $stmt->execute();
