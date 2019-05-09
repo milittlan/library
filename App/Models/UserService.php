@@ -200,7 +200,7 @@ class UserService extends \Core\Model   {
      * @param $description
      * @return bool
      */
-    public function update ($id, $firstname, $lastname, $email, $password, $role, $package, $status)
+    public function update ($id, $firstname, $lastname, $email, $hashpassword, $role, $package, $status)
     {
         /**
          * Take existing value from post
@@ -212,7 +212,7 @@ class UserService extends \Core\Model   {
         $user->setFirstname($firstname);
         $user->setLastname($lastname);
         $user->setEmail($email);
-        $user->setPassword($password);
+        $user->setPassword($hashpassword);
         $user->setRole($role);
         $user->setPackage($package);
         $user->setStatus($status);
@@ -233,7 +233,7 @@ class UserService extends \Core\Model   {
         $firstname = $user->getFirstname();
         $lastname = $user->getLastname();
         $email = $user->getEmail();
-        $password = $user->getPassword();
+        $hashpassword = $user->getPassword();
         $role = $user->getRole();
         $package = $user->getPackage();
         $status = $user->getStatus();
@@ -242,7 +242,7 @@ class UserService extends \Core\Model   {
         $stmt->bindParam(':firstname', $firstname, PDO::PARAM_STR);
         $stmt->bindParam(':lastname', $lastname, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+        $stmt->bindParam(':password', $hashpassword, PDO::PARAM_STR);
         $stmt->bindParam(':role_id', $role, PDO::PARAM_STR);
         $stmt->bindParam(':package_id', $package, PDO::PARAM_STR);
         $stmt->bindParam(':status', $status, PDO::PARAM_STR);
@@ -299,6 +299,75 @@ class UserService extends \Core\Model   {
         } else {
             return false;
         }
+
+    }
+
+    public function register ($firstname, $lastname, $email, $hashpassword, $role, $package, $status) {
+
+        $user = new User();
+
+        $user->setFirstname($firstname);
+        $user->setLastname($lastname);
+        $user->setEmail($email);
+        $user->setPassword($hashpassword);
+        $user->setRole($role);
+        $user->setPackage($package);
+        $user->setStatus($status);
+
+
+        /**
+         * DB connection
+         */
+
+        $db = static::getDB();
+
+
+        /*
+         * Query - Insert user into database
+         */
+
+        $stmt = $db->prepare("INSERT INTO user (firstname, lastname, email, password, role_id, package_id, status) VALUES (:firstname, :lastname, :email, :password, :role_id, :package_id, :status)");
+
+        $firstname = $user->getFirstname();
+        $lastname = $user->getLastname();
+        $email = $user->getEmail();
+        $hashpassword = $user->getPassword();
+        $role = $user->getRole();
+        $package = $user->getPackage();
+        $status = $user->getStatus();
+
+        $stmt->bindParam(':firstname', $firstname, PDO::PARAM_STR);
+        $stmt->bindParam(':lastname', $lastname, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':password', $hashpassword, PDO::PARAM_STR);
+        $stmt->bindParam(':role_id', $role, PDO::PARAM_STR);
+        $stmt->bindParam(':package_id', $package, PDO::PARAM_STR);
+        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+
+        $results = $stmt->execute();
+
+
+        /**
+         * Return boolean
+         */
+
+        if ($results == true) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public function login ($email, $hashpassword) {
+
+    }
+
+    public function isLoggedIn () {
+
+    }
+
+    public function approve () {
 
     }
 

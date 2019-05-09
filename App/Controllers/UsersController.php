@@ -167,6 +167,10 @@ class UsersController extends \Core\Controller
                 $this->addError($error_message);
             }
 
+            if (!empty($password)) {
+                $hashpassword = password_hash($password, PASSWORD_DEFAULT);
+            }
+
 
             /**
              * Check errors
@@ -178,7 +182,7 @@ class UsersController extends \Core\Controller
 
                     $userServices = new UserService();
 
-                    $user = $userServices->update($id, $firstname, $lastname, $email, $password, $roleid, $packageid, $status);
+                    $user = $userServices->update($id, $firstname, $lastname, $email, $hashpassword, $roleid, $packageid, $status);
 
                     /**
                      * Redirect to index/All posts page
@@ -277,6 +281,151 @@ class UsersController extends \Core\Controller
             }
         }
 
+    }
+
+    public function  registerAction () {
+
+        $packageServices = new PackageService();
+        $packages = $packageServices->readAll();
+
+        /**
+         * Checking is it post - create post in database - redirect to index
+         */
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $firstname   = $_POST['firstname'];
+            $lastname = $_POST['lastname'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $roleid = $_POST['roleid'];
+            $packageid = $_POST['packageid'];
+            $status = $_POST['status'];
+
+            /**
+             *
+             * Validate title and content.
+             * For testing we are checking does fields have exact content.
+             *
+             */
+            if (!empty($password)) {
+                $hashpassword = password_hash($password, PASSWORD_DEFAULT);
+            }
+
+            /**
+             * IF empty errors
+             */
+
+            if (empty($this->getErrors())) {
+
+                try {
+
+                    $userServics = new UserService();
+
+                    $user = $userServics->register($firstname, $lastname, $email, $hashpassword, $roleid, $packageid, $status);
+
+
+                    /* Redirect to index/All posts page */
+                    header('Location: index');
+
+
+                }  catch (\PDOException $e) {
+                    $this->addError($e->getMessage());
+                }
+
+            }
+
+            /**
+             * IF EROOR is not empty - Display forms with error message and content
+             */
+
+            View::renderTemplate('Users/register.html', [
+                'firstname' => $firstname,
+                'lastname' => $lastname,
+                'email' => $email,
+                'roleid' => $roleid,
+                'packageid' => $packageid,
+                'password' => $password,
+                'status' => $status,
+                'errors' => $this->getErrors()
+            ]);
+            return;
+        }
+
+
+        View::renderTemplate('Users/register.html', [
+            'packages' => $packages
+        ]);
+        return;
+    }
+
+    public function loginAction () {
+
+        /**
+         * Checking is it post - create post in database - redirect to index
+         */
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $status = $_POST['status'];
+
+            /**
+             *
+             * Validate title and content.
+             * For testing we are checking does fields have exact content.
+             *
+             */
+            if ($status == '0') {
+                $error_message = 'Greska - Vas nalog nije odobren';
+                $this->addError($error_message);
+            }
+
+            /**
+             * IF empty errors
+             */
+
+            if (empty($this->getErrors())) {
+
+                try {
+
+                    $userServics = new UserService();
+
+                    $user = $userServics->register($firstname, $lastname, $email, $hashpassword, $roleid, $packageid, $status);
+
+
+                    /* Redirect to index/All posts page */
+                    header('Location: index');
+
+
+                }  catch (\PDOException $e) {
+                    $this->addError($e->getMessage());
+                }
+
+            }
+
+            /**
+             * IF EROOR is not empty - Display forms with error message and content
+             */
+
+            View::renderTemplate('Users/register.html', [
+                'firstname' => $firstname,
+                'lastname' => $lastname,
+                'email' => $email,
+                'roleid' => $roleid,
+                'packageid' => $packageid,
+                'password' => $password,
+                'status' => $status,
+                'errors' => $this->getErrors()
+            ]);
+            return;
+        }
+
+
+        View::renderTemplate('Users/login.html');
+        return;
     }
 
 }
