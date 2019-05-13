@@ -110,6 +110,7 @@ class UserService extends \Core\Model   {
         $user->setFirstname($results['firstname']);
         $user->setLastname($results['lastname']);
         $user->setEmail($results['email']);
+        $user->setPassword($results['password']);
 
         $userRole = $Roleservices->readOne($results['role_id']);
         $user->setRole($userRole);

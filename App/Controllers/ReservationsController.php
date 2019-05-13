@@ -47,8 +47,13 @@ class ReservationsController extends \Core\Controller
 
             $userid   = $_POST['userid'];
             $bookid = $_POST['bookid'];
-            $datecreated = $_POST['datecreated'];
-            $dateend = $_POST['dateend'];
+
+            $first = $_POST['datecreated'];
+            $date= date("l d F Y - H:i", strtotime($first));
+            $datecreated = $date->format('Y-m-d H:i:00');
+
+            $dateendtest = $_POST['dateend'];
+            $dateend = date("Y-m-d", strtotime($dateendtest));
             $description = $_POST['description'];
             $status = $_POST['status'];
 
