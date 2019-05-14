@@ -223,10 +223,10 @@ class ReservationServices extends \Core\Model   {
         $id = $reservation->getId();
         $userid = $reservation->getUserid();
         $bookid = $reservation->getBookid();
-        $datecreated = $reservation->setDatecreated();
-        $dateend = $reservation->setDateend();
-        $description = $reservation->setDescription();
-        $status = $reservation->setStatus();
+        $datecreated = $reservation->getDatecreated();
+        $dateend = $reservation->getDateend();
+        $description = $reservation->getDescription();
+        $status = $reservation->getStatus();
 
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
         $stmt->bindParam(':user_id', $userid, PDO::PARAM_STR);

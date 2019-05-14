@@ -283,6 +283,37 @@ class UsersController extends \Core\Controller
 
     }
 
+    public function approveAction () {
+
+
+        $id = $this->getRouteParams('id');
+
+        $userServices = new UserService();
+
+        $user = $userServices->readOne($id);
+
+        $id = $user->getId();
+        $firstname = $user->getFirstname();
+        $lastname = $user->getLastname();
+        $email = $user->getEmail();
+        $hashpassword = $user->getPassword();
+        $role = $user->getRole();
+        $roleid = $role->getId();
+        $package = $user->getPackage();
+        $packageid = $package->getId();
+        $status = $user->getStatus();
+
+        if ($status == 1) {
+            header('Location: /users/index');
+        } else {
+            $status++;
+            $user = $userServices->approve($id, $firstname, $lastname, $email, $hashpassword, $roleid, $packageid, $status);
+            header('Location: /users/index');
+        }
+
+
+    }
+
     public function  registerAction () {
 
         $packageServices = new PackageService();
@@ -427,5 +458,7 @@ class UsersController extends \Core\Controller
         View::renderTemplate('Users/login.html');
         return;
     }
+
+
 
 }

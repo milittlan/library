@@ -48,9 +48,8 @@ class ReservationsController extends \Core\Controller
             $userid   = $_POST['userid'];
             $bookid = $_POST['bookid'];
 
-            $first = $_POST['datecreated'];
-            $date= date("l d F Y - H:i", strtotime($first));
-            $datecreated = $date->format('Y-m-d H:i:00');
+            $date = $_POST['datecreated'];
+            $datecreated = date('Y-m-d H:i:s', strtotime(str_replace(" ","-",$_POST['datecreated'])));
 
             $dateendtest = $_POST['dateend'];
             $dateend = date("Y-m-d", strtotime($dateendtest));
@@ -177,7 +176,7 @@ class ReservationsController extends \Core\Controller
                     /**
                      * Redirect to index/All posts page
                      */
-                    header('Location: /packages/index');
+                    header('Location: /Reservations/index');
 
 
                 } catch (PDOException $e) {
@@ -190,7 +189,7 @@ class ReservationsController extends \Core\Controller
              * Display forms with error message and content.
              */
 
-            View::renderTemplate('Packages/editPackage.html', [
+            View::renderTemplate('Reservations/editReservation.html', [
                 'id' => $id,
                 'userid' => $userid,
                 'bookid' => $bookid,
@@ -198,6 +197,7 @@ class ReservationsController extends \Core\Controller
                 'dateend' => $dateend,
                 'description' => $description,
                 'status' => $status,
+                'users' => $users,
                 'errors' => $this->getErrors()
             ]);
             return;
@@ -225,7 +225,7 @@ class ReservationsController extends \Core\Controller
                 'id' => $id,
                 'userid' => $userid,
                 'bookid' => $bookid,
-                'duration' => $datecreated,
+                'datecreated' => $datecreated,
                 'dateend' => $dateend,
                 'description' => $description,
                 'users' => $users,

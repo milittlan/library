@@ -303,6 +303,64 @@ class UserService extends \Core\Model   {
 
     }
 
+    public function approve ($id, $firstname, $lastname, $email, $hashpassword, $role, $package, $status) {
+
+
+        $user = new User();
+
+        $user->setId($id);
+        $user->setFirstname($firstname);
+        $user->setLastname($lastname);
+        $user->setEmail($email);
+        $user->setPassword($hashpassword);
+        $user->setRole($role);
+        $user->setPackage($package);
+
+        $user->setStatus($status);
+
+        /* DB connection */
+
+        $db = static::getDB();
+
+        /*
+          * Query - Update posts
+          */
+
+        $stmt = $db->prepare("UPDATE user SET id = :id, firstname = :firstname, lastname = :lastname, email = :email, password = :password, role_id = :role_id, package_id = :package_id, status = :status WHERE id = :id");
+
+        $id = $user->getId();
+        $firstname = $user->getFirstname();
+        $lastname = $user->getLastname();
+        $email = $user->getEmail();
+        $hashpassword = $user->getPassword();
+        $roleid = $user->getRole();
+        $packageid = $user->getPackage();
+        $status = $user->getStatus();
+
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        $stmt->bindParam(':firstname', $firstname, PDO::PARAM_STR);
+        $stmt->bindParam(':lastname', $lastname, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':password', $hashpassword, PDO::PARAM_STR);
+        $stmt->bindParam(':role_id', $roleid, PDO::PARAM_STR);
+        $stmt->bindParam(':package_id', $packageid, PDO::PARAM_STR);
+        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+
+        $results = $stmt->execute();
+
+
+        /**
+         * Return boolean
+         */
+
+        if ($results == true) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     public function register ($firstname, $lastname, $email, $hashpassword, $role, $package, $status) {
 
         $user = new User();
@@ -368,8 +426,6 @@ class UserService extends \Core\Model   {
 
     }
 
-    public function approve () {
 
-    }
 
 }

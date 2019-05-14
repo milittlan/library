@@ -38,7 +38,7 @@
                     <div class="form-group form-float">
                         <div class="form-line">
                             <select class="form-control show-tick" name="userid">
-                                <option value="">-- User --</option>
+                                <option value="{{userid.id}}">{{ userid.firstname }} {{ userid.lastname }}</option>
 
                                 {% for user in users %}
                                 <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>
@@ -51,7 +51,7 @@
                     <div class="form-group form-float">
                         <div class="form-line">
                             <select class="form-control show-tick" name="bookid">
-                                <option value="">-- Book --</option>
+                                <option value="{{bookid.id}}">{{ bookid.title }}</option>
 
                                 {% for book in books %}
                                     <option value="{{ book.id }}">{{ book.title }}</option>
@@ -62,21 +62,40 @@
                     </div>
 
                     <h2 class="card-inside-title">DATE Range</h2>
-                    <div class="input-daterange input-group" id="bs_datepicker_range_container">
-                        <div class="form-line">
-                            <input type="text" class="form-control" placeholder="Date start..." name="datecreated">
+                    <div class="form-group form-float" >
+
+                        <div class="row">
+
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" class="datetimepicker form-control" placeholder="Please choose date & time..." name="datecreated" value="{{datecreated}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <span class="input-group-addon">to</span>
+                            </div>
+
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" class="datetimepicker form-control" placeholder="Please choose date & time..." name="dateend" value="{{dateend}}">
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                        <span class="input-group-addon">to</span>
-                        <div class="form-line">
-                            <input type="text" class="form-control" placeholder="Date end..." name="dateend">
-                        </div>
+
+
                     </div>
 
 
 
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="text" class="form-control" name="description" required value="{{ description }}">
+                            <input type="text" class="form-control" name="description" required  value="{{ description }}">
                             <label class="form-label">Description</label>
                         </div>
                     </div>
@@ -84,9 +103,16 @@
                     <div class="form-group form-float">
                         <div class="form-line">
                             <select class="form-control show-tick" name="status" value="{{ status }}">
-                                <option value="{{ status }}">-- Status --</option>
-                                <option value="1">Active</option>
-                                <option value="0">Disabled</option>
+
+                                {% if status  > 0 %}
+                                <option value="{{status}}">Reserved</option>
+                                {% else %}
+                                <option value="{{status}}">Free</option>
+                                {% endif %}
+
+                                <option value="1">Reserved</option>
+                                <option value="0">Free</option>
+
                             </select>
                         </div>
                     </div>
