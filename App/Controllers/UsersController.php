@@ -306,7 +306,7 @@ class UsersController extends \Core\Controller
         if ($status == 1) {
             header('Location: /users/index');
         } else {
-            $status++;
+
             $user = $userServices->approve($id, $firstname, $lastname, $email, $hashpassword, $roleid, $packageid, $status);
             header('Location: /users/index');
         }
@@ -396,12 +396,13 @@ class UsersController extends \Core\Controller
          * Checking is it post - create post in database - redirect to index
          */
 
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $status = $_POST['status'];
+
 
             /**
              *
@@ -409,9 +410,8 @@ class UsersController extends \Core\Controller
              * For testing we are checking does fields have exact content.
              *
              */
-            if ($status == '0') {
-                $error_message = 'Greska - Vas nalog nije odobren';
-                $this->addError($error_message);
+            if (!empty($password)) {
+                $hashpassword = password_hash($password, PASSWORD_DEFAULT);
             }
 
             /**
@@ -424,7 +424,7 @@ class UsersController extends \Core\Controller
 
                     $userServics = new UserService();
 
-                    $user = $userServics->register($firstname, $lastname, $email, $hashpassword, $roleid, $packageid, $status);
+                    $user = $userServics->login($email, $hashpassword);
 
 
                     /* Redirect to index/All posts page */
@@ -438,19 +438,10 @@ class UsersController extends \Core\Controller
             }
 
             /**
-             * IF EROOR is not empty - Display forms with error message and content
+             * IF EROOR is not empty - Display forms for registration
              */
 
-            View::renderTemplate('Users/register.html', [
-                'firstname' => $firstname,
-                'lastname' => $lastname,
-                'email' => $email,
-                'roleid' => $roleid,
-                'packageid' => $packageid,
-                'password' => $password,
-                'status' => $status,
-                'errors' => $this->getErrors()
-            ]);
+            View::renderTemplate('Users/register.html');
             return;
         }
 

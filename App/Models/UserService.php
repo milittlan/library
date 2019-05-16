@@ -315,7 +315,7 @@ class UserService extends \Core\Model   {
         $user->setPassword($hashpassword);
         $user->setRole($role);
         $user->setPackage($package);
-
+        $status++;
         $user->setStatus($status);
 
         /* DB connection */
@@ -360,6 +360,8 @@ class UserService extends \Core\Model   {
         }
 
     }
+
+    public function disable () {}
 
     public function register ($firstname, $lastname, $email, $hashpassword, $role, $package, $status) {
 
@@ -420,9 +422,46 @@ class UserService extends \Core\Model   {
 
     public function login ($email, $hashpassword) {
 
+        $db = static::getDB();
+
+        $stmt = $db->prepare("SELECT * FROM user WHERE email = :email LIMIT 1");
+
+        $stmt->execute(["email"=>$email]);
+
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $Roleservices = new RoleService();
+        $packageServices = new PackageService();
+
+        $user = new User();
+
+        $user->setId($results['id']);
+        $user->setFirstname($results['firstname']);
+        $user->setLastname($results['lastname']);
+        $user->setEmail($results['email']);
+        $user->setPassword($results['password']);
+
+        $userRole = $Roleservices->readOne($results['role_id']);
+        $user->setRole($userRole);
+
+        $userPackage = $packageServices->readOne($results['package_id']);
+        $user->setPackage($userPackage);
+
+        $user->setStatus($results['status']);
+
+
+        if(password_verify($hashpassword, $results['password'])) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
     }
 
     public function isLoggedIn () {
+
+
 
     }
 
