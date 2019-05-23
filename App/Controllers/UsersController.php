@@ -393,9 +393,8 @@ class UsersController extends \Core\Controller
     public function loginAction () {
 
         /**
-         * Checking is it post - create post in database - redirect to index
+         * Checking is it post - Check user and redirect to index
          */
-
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -410,8 +409,8 @@ class UsersController extends \Core\Controller
              * For testing we are checking does fields have exact content.
              *
              */
-            if (!empty($password)) {
-                $hashpassword = password_hash($password, PASSWORD_DEFAULT);
+            if (empty($password)) {
+                return false;
             }
 
             /**
@@ -424,11 +423,13 @@ class UsersController extends \Core\Controller
 
                     $userServics = new UserService();
 
-                    $user = $userServics->login($email, $hashpassword);
+                    $user = $userServics->login($email, $password);
 
+                    $_SESSION['firstname'] = $user->firstname;
+                    $_SESSION['lastname'] = $user->lastname;
 
-                    /* Redirect to index/All posts page */
-                    header('Location: index');
+                    /* Redirect to index/home page */
+                    header('Location: /home/index');
 
 
                 }  catch (\PDOException $e) {

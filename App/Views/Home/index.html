@@ -1,17 +1,18 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block title %}Home{% endblock %}
 
 {% block body %}
 
-    <h1>Welcome</h1>
-    <p>Hello from a Twig template, {{ name }}!</p>
+<h1>Welcome</h1>
 
+{% if session.firstname %}
 
-    <ul>
-        {% for data in datas %}
-            <li>{{ data }}</li>
-        {% endfor %}
-    </ul>
+Hello {{ session.firstname }} {{ session.lastname }}, you are logged in.
+<a href="/logout">Log out</a>
+
+{% else %}
+<a href="/users/register">Sign up</a> or <a href="/users/login">log in</a>.
+{% endif %}
 
 {% endblock %}
