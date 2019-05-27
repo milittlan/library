@@ -89,6 +89,7 @@ abstract class Controller {
 
     protected function before()
     {
+
     }
 
     /**

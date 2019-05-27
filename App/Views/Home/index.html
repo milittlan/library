@@ -6,10 +6,10 @@
 
 <h1>Welcome</h1>
 
-{% if session.firstname %}
+{% if is_logged_in %}
 
 Hello {{ session.firstname }} {{ session.lastname }}, you are logged in.
-<a href="/logout">Log out</a>
+<a href="/users/logout">Log out</a>
 
 {% else %}
 <a href="/users/register">Sign up</a> or <a href="/users/login">log in</a>.

@@ -425,6 +425,7 @@ class UsersController extends \Core\Controller
 
                     $user = $userServics->login($email, $password);
 
+                    $_SESSION['id'] = $user->id;
                     $_SESSION['firstname'] = $user->firstname;
                     $_SESSION['lastname'] = $user->lastname;
 
@@ -449,6 +450,18 @@ class UsersController extends \Core\Controller
 
         View::renderTemplate('Users/login.html');
         return;
+    }
+
+    public function logoutAction () {
+
+        $userServics = new UserService();
+
+        $user = $userServics->logout();
+
+
+        header('Location: /home/index');
+
+
     }
 
 

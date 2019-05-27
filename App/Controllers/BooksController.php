@@ -22,7 +22,6 @@ class BooksController extends \Core\Controller  {
     public function indexAction()
     {
 
-
         $bookServices = new BookService();
         $books = $bookServices->readAll();
 

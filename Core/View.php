@@ -47,6 +47,7 @@ class View
             $loader = new \Twig_Loader_Filesystem('../App/Views');
             $twig = new \Twig_Environment($loader);
             $twig->addGlobal('session', $_SESSION);
+            $twig->addGlobal('is_logged_in', \App\Models\AccessControlService::isLoggedIn());
         }
 
         echo $twig->render($template, $args);
