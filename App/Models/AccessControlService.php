@@ -9,7 +9,15 @@ class AccessControlService extends \Core\Model   {
     }
 
     public static function isLoggedIn () {
-        return isset($_SESSION['id']);
+        
+        $user =  isset($_SESSION['user']) ? $_SESSION['user'] : NULL;
+
+        if ($user) {
+            return true;
+        }
+
+        return false;
+
     }
 
 }

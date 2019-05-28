@@ -398,16 +398,11 @@ class UsersController extends \Core\Controller
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-
             /**
-             *
-             * Validate title and content.
-             * For testing we are checking does fields have exact content.
-             *
+             * Validate existing password
              */
             if (empty($password)) {
                 return false;
@@ -425,9 +420,8 @@ class UsersController extends \Core\Controller
 
                     $user = $userServics->login($email, $password);
 
-                    $_SESSION['id'] = $user->id;
-                    $_SESSION['firstname'] = $user->firstname;
-                    $_SESSION['lastname'] = $user->lastname;
+                    $_SESSION['user'] = $user;
+
 
                     /* Redirect to index/home page */
                     header('Location: /home/index');
