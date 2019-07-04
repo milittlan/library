@@ -436,18 +436,17 @@ class UserService extends \Core\Model   {
                     return $user;
                 }
             }
+        } else {
+            return false;
         }
 
-        return false;
+        return $user;
 
     }
 
     /**
      * @param $email
      * @return bool
-     *
-     *
-     *
      */
     public static function emailExists($email)
     {
@@ -502,7 +501,5 @@ class UserService extends \Core\Model   {
         // Finally destroy the session
         session_destroy();
     }
-
-
 
 }
