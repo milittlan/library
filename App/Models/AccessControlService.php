@@ -8,6 +8,16 @@ use App\Models\Entity\User;
 
 class AccessControlService extends \Core\Model   {
 
+    public static function checkAccess () {
+
+      
+    }
+
+    /*
+     *
+     * Check is user logged in and approved
+     *
+     */
     public static function isLoggedIn () {
 
         $user =  isset($_SESSION['user']) ? $_SESSION['user'] : NULL;
@@ -23,15 +33,11 @@ class AccessControlService extends \Core\Model   {
     }
 
 
-    public static function checkAccess () {
-
-        $user = static::isLoggedIn();
-
-        $role = static::RolePermissions($user->role_id);
-
-        return true;
-    }
-
+    /*
+     *
+     * check all permissions for specific role
+     *
+     */
     public static function RolePermissions ($role) {
 
         try {

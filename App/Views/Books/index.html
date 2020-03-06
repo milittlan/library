@@ -29,6 +29,19 @@
 
             {% if checkAccess %}
 
+            <div class="test">
+
+                {% for role in roles %}
+
+                    <div>{{ role.id}}</div>
+                    <div>{{ role.roleid}}</div>
+                    <div>{{ role.permissiondid}}</div>
+                    <div>{{ role.moduleid}}</div>
+
+                {% endfor %}
+
+            </div>
+
                 <div class="body table-responsive">
 
                 <table class="table">

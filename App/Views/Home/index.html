@@ -6,7 +6,7 @@
 
 <h1>Welcome</h1>
 
-{% if isLoggedIn %}
+{% if checkAccess %}
 
 Hello {{ session.user.firstname }} {{ session.user.lastname }} , you are logged in.
 <br>
